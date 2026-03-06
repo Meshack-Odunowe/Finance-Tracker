@@ -1,0 +1,5 @@
+{
+  "name": "Finance Tracker",
+  "description": "A personal finance tracker to manage income, expenses, and budgets.",
+  "requestFramePermissions": []
+}
