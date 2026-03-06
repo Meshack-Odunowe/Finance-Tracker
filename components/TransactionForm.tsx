@@ -40,20 +40,24 @@ export function TransactionForm() {
   const type = useWatch({ control, name: 'type' });
   const categories = type === 'expense' ? EXPENSE_CATEGORIES : INCOME_CATEGORIES;
 
-  const onSubmit = (data: TransactionFormValues) => {
-    addTransaction({
-      ...data,
-      description: data.description || '',
-    });
-    toast.success('Transaction added successfully!');
-    reset({
-      type: data.type,
-      date: new Date().toISOString().split('T')[0],
-      description: '',
-      amount: undefined,
-      category: '',
-    });
-    router.push('/transactions');
+  const onSubmit = async (data: TransactionFormValues) => {
+    try {
+      await addTransaction({
+        ...data,
+        description: data.description || '',
+      });
+      toast.success('Transaction added successfully!');
+      reset({
+        type: data.type,
+        date: new Date().toISOString().split('T')[0],
+        description: '',
+        amount: undefined,
+        category: '',
+      });
+      router.push('/transactions');
+    } catch (error) {
+      toast.error('Failed to add transaction. Please try again.');
+    }
   };
 
   return (

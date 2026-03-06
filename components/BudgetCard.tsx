@@ -8,6 +8,7 @@ import { Budget } from '@/types/finance';
 import { useFinanceStore } from '@/store/useFinanceStore';
 import { formatCurrency } from '@/utils/formatters';
 import { Edit2, Trash2, Check, X } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface BudgetCardProps {
   budget: Budget;
@@ -34,9 +35,23 @@ export function BudgetCard({ budget }: BudgetCardProps) {
     },
   });
 
-  const onSubmit = (data: BudgetFormValues) => {
-    setBudget({ category: budget.category, limit: data.limit });
-    setIsEditing(false);
+  const onSubmit = async (data: BudgetFormValues) => {
+    try {
+      await setBudget({ category: budget.category, limit: data.limit });
+      setIsEditing(false);
+      toast.success('Budget updated successfully');
+    } catch (error) {
+      toast.error('Failed to update budget');
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deleteBudget(budget.category);
+      toast.success('Budget deleted successfully');
+    } catch (error) {
+      toast.error('Failed to delete budget');
+    }
   };
 
   return (
@@ -52,7 +67,7 @@ export function BudgetCard({ budget }: BudgetCardProps) {
               <Edit2 className="h-4 w-4" />
             </button>
             <button
-              onClick={() => deleteBudget(budget.category)}
+              onClick={handleDelete}
               className="text-gray-400 hover:text-red-600 transition-colors"
             >
               <Trash2 className="h-4 w-4" />
@@ -77,7 +92,7 @@ export function BudgetCard({ budget }: BudgetCardProps) {
           </div>
           <button
             type="submit"
-            className="inline-flex items-center rounded-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="inline-flex items-center rounded-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             <Check className="h-4 w-4" />
           </button>
@@ -96,7 +111,8 @@ export function BudgetCard({ budget }: BudgetCardProps) {
           </p>
           <p className="mt-1 text-sm text-gray-500">Monthly Limit</p>
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 }

@@ -14,6 +14,7 @@ import {
   groupTransactionsByCategory,
   calculateBudgetProgress,
 } from '@/utils/calculations';
+import Link from 'next/link';
 
 export default function DashboardPage() {
   const isHydrated = useHydration();
@@ -29,21 +30,23 @@ export default function DashboardPage() {
   }
 
   const currentDate = new Date();
-  
+
   const totalIncome = calculateTotalIncome(transactions, currentDate);
   const totalExpenses = calculateTotalExpenses(transactions, currentDate);
   const remainingBalance = calculateBalance(transactions, currentDate);
   const categoryData = groupTransactionsByCategory(transactions, currentDate);
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-          Dashboard
-        </h1>
-        <p className="mt-1 text-sm text-gray-500">
-          Overview of your finances for the current month.
-        </p>
+    <div className="space-y-6 sm:space-y-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+            Dashboard
+          </h1>
+          <p className="mt-1 text-sm text-gray-500">
+            Overview of your finances for the current month.
+          </p>
+        </div>
       </div>
 
       <DashboardSummary
@@ -53,35 +56,35 @@ export default function DashboardPage() {
         transactionCount={transactions.length}
       />
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <div className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-900/5">
+      <div className="grid grid-cols-1 gap-4 sm:gap-8 lg:grid-cols-2">
+        <div className="rounded-xl bg-white p-4 sm:p-6 shadow-sm ring-1 ring-gray-900/5">
           <h2 className="text-base font-semibold leading-6 text-gray-900 mb-4">Spending by Category</h2>
           <SpendingPieChart data={categoryData} />
         </div>
 
-        <div className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-900/5">
+        <div className="rounded-xl bg-white p-4 sm:p-6 shadow-sm ring-1 ring-gray-900/5">
           <h2 className="text-base font-semibold leading-6 text-gray-900 mb-4">Category Comparison</h2>
           <CategoryBarChart data={categoryData} />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-        <div className="lg:col-span-2 rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-900/5">
+      <div className="grid grid-cols-1 gap-4 sm:gap-8 lg:grid-cols-3">
+        <div className="lg:col-span-2 rounded-xl bg-white p-4 sm:p-6 shadow-sm ring-1 ring-gray-900/5 overflow-hidden">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-base font-semibold leading-6 text-gray-900">Recent Transactions</h2>
-            <a href="/transactions" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+            <Link href="/transactions" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
               View all
-            </a>
+            </Link>
           </div>
           <TransactionList transactions={transactions} limit={5} />
         </div>
 
-        <div className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-900/5">
+        <div className="rounded-xl bg-white p-4 sm:p-6 shadow-sm ring-1 ring-gray-900/5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-base font-semibold leading-6 text-gray-900">Budget Progress</h2>
-            <a href="/budget" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+            <Link href="/budget" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
               Manage
-            </a>
+            </Link>
           </div>
           <div className="space-y-6">
             {budgets.length === 0 ? (

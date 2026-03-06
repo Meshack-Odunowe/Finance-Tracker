@@ -24,7 +24,7 @@ export default function BudgetPage() {
     );
   }
 
-  const handleAddBudget = (e: React.FormEvent) => {
+  const handleAddBudget = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newCategory || !newLimit) return;
 
@@ -39,11 +39,15 @@ export default function BudgetPage() {
       return;
     }
 
-    setBudget({ category: newCategory, limit: limitNum });
-    toast.success('Budget added successfully!');
-    setIsAdding(false);
-    setNewCategory('');
-    setNewLimit('');
+    try {
+      await setBudget({ category: newCategory, limit: limitNum });
+      toast.success('Budget added successfully!');
+      setIsAdding(false);
+      setNewCategory('');
+      setNewLimit('');
+    } catch (error) {
+      toast.error('Failed to add budget. Please try again.');
+    }
   };
 
   const availableCategories = EXPENSE_CATEGORIES.filter(

@@ -5,6 +5,7 @@ import { formatCurrency, formatDate } from '@/utils/formatters';
 import { Trash2 } from 'lucide-react';
 import { useFinanceStore } from '@/store/useFinanceStore';
 import { EmptyState } from './EmptyState';
+import { toast } from 'sonner';
 
 interface TransactionListProps {
   transactions: Transaction[];
@@ -14,7 +15,16 @@ interface TransactionListProps {
 
 export function TransactionList({ transactions, limit, showDelete = false }: TransactionListProps) {
   const deleteTransaction = useFinanceStore((state) => state.deleteTransaction);
-  
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteTransaction(id);
+      toast.success('Transaction deleted');
+    } catch (error) {
+      toast.error('Failed to delete transaction');
+    }
+  };
+
   const sortedTransactions = [...transactions].sort((a, b) => {
     return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
@@ -58,15 +68,14 @@ export function TransactionList({ transactions, limit, showDelete = false }: Tra
                   {transaction.category}
                 </span>
               </td>
-              <td className={`whitespace-nowrap px-3 py-4 text-sm text-right font-semibold ${
-                transaction.type === 'income' ? 'text-emerald-600' : 'text-red-600'
-              }`}>
+              <td className={`whitespace-nowrap px-3 py-4 text-sm text-right font-semibold ${transaction.type === 'income' ? 'text-emerald-600' : 'text-red-600'
+                }`}>
                 {transaction.type === 'income' ? '+' : '-'}{formatCurrency(transaction.amount)}
               </td>
               {showDelete && (
                 <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                   <button
-                    onClick={() => deleteTransaction(transaction.id)}
+                    onClick={() => handleDelete(transaction.id)}
                     className="text-gray-400 hover:text-red-600 transition-colors"
                     aria-label="Delete transaction"
                   >
