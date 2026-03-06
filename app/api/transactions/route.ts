@@ -1,11 +1,26 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-export async function GET() {
+export async function GET(request: Request) {
     try {
+        const { searchParams } = new URL(request.url);
+        const search = searchParams.get('search');
+        const category = searchParams.get('category');
+        const startDate = searchParams.get('startDate');
+        const endDate = searchParams.get('endDate');
+
         const transactions = await prisma.transaction.findMany({
+            where: {
+                AND: [
+                    search ? { description: { contains: search, mode: 'insensitive' } } : {},
+                    category ? { category: { equals: category } } : {},
+                    startDate ? { date: { gte: new Date(startDate) } } : {},
+                    endDate ? { date: { lte: new Date(endDate) } } : {},
+                ],
+            },
             orderBy: { date: 'desc' },
         });
+
         return NextResponse.json(transactions);
     } catch (error) {
         console.error('Failed to fetch transactions:', error);

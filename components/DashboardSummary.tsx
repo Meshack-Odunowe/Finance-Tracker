@@ -2,6 +2,7 @@
 
 import { ArrowDownRight, ArrowUpRight, DollarSign, Activity } from 'lucide-react';
 import { formatCurrency } from '@/utils/formatters';
+import { twMerge } from 'tailwind-merge';
 
 interface DashboardSummaryProps {
   totalIncome: number;
@@ -21,46 +22,55 @@ export function DashboardSummary({
       name: 'Total Balance',
       value: formatCurrency(remainingBalance),
       icon: DollarSign,
-      color: remainingBalance >= 0 ? 'text-emerald-600' : 'text-red-600',
-      bgColor: remainingBalance >= 0 ? 'bg-emerald-100' : 'bg-red-100',
+      color: remainingBalance >= 0 ? 'text-slate-900' : 'text-red-600',
+      bgColor: 'bg-slate-50',
+      borderColor: 'border-slate-200',
     },
     {
       name: 'Total Income',
       value: formatCurrency(totalIncome),
       icon: ArrowUpRight,
       color: 'text-emerald-600',
-      bgColor: 'bg-emerald-100',
+      bgColor: 'bg-emerald-50/50',
+      borderColor: 'border-emerald-100/50',
     },
     {
       name: 'Total Expenses',
       value: formatCurrency(totalExpenses),
       icon: ArrowDownRight,
-      color: 'text-red-600',
-      bgColor: 'bg-red-100',
+      color: 'text-rose-600',
+      bgColor: 'bg-rose-50/50',
+      borderColor: 'border-rose-100/50',
     },
     {
       name: 'Transactions',
       value: transactionCount.toString(),
       icon: Activity,
-      color: 'text-indigo-600',
-      bgColor: 'bg-indigo-100',
+      color: 'text-slate-600',
+      bgColor: 'bg-slate-50',
+      borderColor: 'border-slate-200',
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {cards.map((card) => (
         <div
           key={card.name}
-          className="overflow-hidden rounded-xl bg-white px-4 py-5 shadow-sm border border-gray-100 sm:p-6"
+          className={twMerge(
+            'relative overflow-hidden rounded-xl bg-white p-5 border shadow-[0_1px_2px_rgba(0,0,0,0.05)] transition-all hover:shadow-[0_4px_12px_rgba(0,0,0,0.05)]',
+            card.borderColor
+          )}
         >
-          <div className="flex items-center">
-            <div className={`flex-shrink-0 rounded-md p-3 ${card.bgColor}`}>
-              <card.icon className={`h-6 w-6 ${card.color}`} aria-hidden="true" />
+          <div className="flex flex-col gap-3">
+            <div className={twMerge('w-fit rounded-lg p-2', card.bgColor)}>
+              <card.icon className={twMerge('h-4 w-4', card.color)} aria-hidden="true" />
             </div>
-            <div className="ml-5 w-0 flex-1">
-              <dt className="truncate text-sm font-medium text-gray-500">{card.name}</dt>
-              <dd className="mt-1 text-2xl font-semibold text-gray-900">{card.value}</dd>
+            <div>
+              <dt className="text-[13px] font-medium text-slate-500">{card.name}</dt>
+              <dd className={twMerge('mt-1 text-2xl font-bold tracking-tight', card.color)}>
+                {card.value}
+              </dd>
             </div>
           </div>
         </div>

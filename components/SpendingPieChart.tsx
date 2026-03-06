@@ -6,7 +6,23 @@ interface SpendingPieChartProps {
   data: { name: string; value: number }[];
 }
 
-const COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#f43f5e', '#f97316', '#eab308', '#22c55e', '#14b8a6', '#0ea5e9'];
+const COLORS = [
+  '#6366f1', // Indigo 500
+  '#4f46e5', // Indigo 600
+  '#4338ca', // Indigo 700
+  '#3730a3', // Indigo 800
+  '#312e81', // Indigo 900
+  '#1e1b4b', // Indigo 950
+  '#94a3b8', // Slate 400
+  '#2C3E50', // Darker Blue/Grey
+  '#34495E', // Slightly lighter
+  '#4A6572', // Muted Blue
+  '#5B7F8D', // Lighter Muted Blue
+  '#708090', // Slate Gray
+  '#8D9CA7', // Lighter Slate Gray
+  '#AAB8C2', // Even lighter
+  '#CFD8DC', // Very light grey/blue
+];
 
 export function SpendingPieChart({ data }: SpendingPieChartProps) {
   if (data.length === 0) {
@@ -34,7 +50,7 @@ export function SpendingPieChart({ data }: SpendingPieChartProps) {
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
-          <Tooltip 
+          <Tooltip
             formatter={(value: any) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(value))}
           />
           <Legend />

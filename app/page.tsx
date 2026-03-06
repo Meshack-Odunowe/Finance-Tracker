@@ -15,6 +15,7 @@ import {
   calculateBudgetProgress,
 } from '@/utils/calculations';
 import Link from 'next/link';
+import { Activity } from 'lucide-react';
 
 export default function DashboardPage() {
   const isHydrated = useHydration();
@@ -37,15 +38,23 @@ export default function DashboardPage() {
   const categoryData = groupTransactionsByCategory(transactions, currentDate);
 
   return (
-    <div className="space-y-6 sm:space-y-8">
+    <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
             Dashboard
           </h1>
-          <p className="mt-1 text-sm text-gray-500">
-            Overview of your finances for the current month.
+          <p className="mt-1 text-[13px] text-slate-500 font-medium">
+            Personal balance and monthly expenditure overview.
           </p>
+        </div>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/add-transaction"
+            className="inline-flex items-center justify-center rounded-lg bg-indigo-600 px-4 py-2 text-[13px] font-semibold text-white shadow-sm shadow-indigo-200 hover:bg-indigo-500 transition-all hover:scale-[1.02] active:scale-[0.98]"
+          >
+            Add Transaction
+          </Link>
         </div>
       </div>
 
@@ -56,39 +65,44 @@ export default function DashboardPage() {
         transactionCount={transactions.length}
       />
 
-      <div className="grid grid-cols-1 gap-4 sm:gap-8 lg:grid-cols-2">
-        <div className="rounded-xl bg-white p-4 sm:p-6 shadow-sm ring-1 ring-gray-900/5">
-          <h2 className="text-base font-semibold leading-6 text-gray-900 mb-4">Spending by Category</h2>
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="rounded-2xl bg-white p-6 border border-slate-200 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+          <h2 className="text-[14px] font-bold text-slate-900 mb-6">Spending by Category</h2>
           <SpendingPieChart data={categoryData} />
         </div>
 
-        <div className="rounded-xl bg-white p-4 sm:p-6 shadow-sm ring-1 ring-gray-900/5">
-          <h2 className="text-base font-semibold leading-6 text-gray-900 mb-4">Category Comparison</h2>
+        <div className="rounded-2xl bg-white p-6 border border-slate-200 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+          <h2 className="text-[14px] font-bold text-slate-900 mb-6">Category Comparison</h2>
           <CategoryBarChart data={categoryData} />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:gap-8 lg:grid-cols-3">
-        <div className="lg:col-span-2 rounded-xl bg-white p-4 sm:p-6 shadow-sm ring-1 ring-gray-900/5 overflow-hidden">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-base font-semibold leading-6 text-gray-900">Recent Transactions</h2>
-            <Link href="/transactions" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="lg:col-span-2 rounded-2xl bg-white border border-slate-200 shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
+          <div className="flex items-center justify-between p-6 pb-2">
+            <h2 className="text-[14px] font-bold text-slate-900">Recent Transactions</h2>
+            <Link href="/transactions" className="text-[12px] font-bold text-indigo-600 hover:text-indigo-500 transition-colors bg-indigo-50 px-2 py-1 rounded-md">
               View all
             </Link>
           </div>
           <TransactionList transactions={transactions} limit={5} />
         </div>
 
-        <div className="rounded-xl bg-white p-4 sm:p-6 shadow-sm ring-1 ring-gray-900/5">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-base font-semibold leading-6 text-gray-900">Budget Progress</h2>
-            <Link href="/budget" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+        <div className="rounded-2xl bg-white p-6 border border-slate-200 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-[14px] font-bold text-slate-900">Budget Progress</h2>
+            <Link href="/budget" className="text-[12px] font-bold text-indigo-600 hover:text-indigo-500 transition-colors bg-indigo-50 px-2 py-1 rounded-md">
               Manage
             </Link>
           </div>
           <div className="space-y-6">
             {budgets.length === 0 ? (
-              <p className="text-sm text-gray-500 text-center py-4">No budgets set. Create one to track spending.</p>
+              <div className="flex flex-col items-center justify-center py-6 text-center">
+                <div className="h-10 w-10 rounded-full bg-slate-50 flex items-center justify-center mb-3">
+                  <Activity className="h-5 w-5 text-slate-300" />
+                </div>
+                <p className="text-[13px] font-medium text-slate-400">No active budgets</p>
+              </div>
             ) : (
               budgets.map((budget) => {
                 const { spent } = calculateBudgetProgress(budget.category, transactions, budgets, currentDate);

@@ -21,38 +21,34 @@ export function Sidebar() {
 
   const sidebarContent = (
     <div className={twMerge(
-      'flex h-full flex-col border-r border-gray-200 bg-white transition-all duration-300 ease-in-out',
-      isSidebarCollapsed ? 'md:w-20' : 'md:w-64',
-      'w-64' // Always expanded width for mobile/drawer
+      'flex h-full flex-col border-r border-slate-200 bg-[#f8f9fb] transition-all duration-300 ease-in-out',
+      isSidebarCollapsed ? 'md:w-[72px]' : 'md:w-64',
+      'w-64'
     )}>
-      <div className="flex h-16 items-center justify-between px-6 border-b border-gray-200">
+      <div className="flex h-14 items-center justify-between px-5 border-b border-transparent">
         <div className="flex items-center overflow-hidden">
-          <Wallet className="h-6 w-6 text-indigo-600 flex-shrink-0" />
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-600 shadow-sm shadow-indigo-200">
+            <Wallet className="h-4 w-4 text-white" />
+          </div>
           {!isSidebarCollapsed && (
             <motion.span
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="ml-2 text-lg font-semibold text-gray-900 whitespace-nowrap"
+              className="ml-3 text-[15px] font-semibold text-slate-800 tracking-tight whitespace-nowrap"
             >
-              FinanceTracker
+              Capital
             </motion.span>
           )}
         </div>
         <button
           onClick={toggleSidebar}
-          className="hidden md:flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 text-gray-500"
+          className="hidden md:flex items-center justify-center h-7 w-7 rounded-md hover:bg-slate-200/50 text-slate-400 transition-colors"
         >
-          {isSidebarCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
-        </button>
-        <button
-          onClick={closeMobileMenu}
-          className="md:hidden flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100 text-gray-500"
-        >
-          <X size={18} />
+          {isSidebarCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
         </button>
       </div>
 
-      <nav className="flex-1 space-y-1 px-3 py-4 overflow-y-auto">
+      <nav className="flex-1 space-y-0.5 px-3 py-6 overflow-y-auto">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
           return (
@@ -64,10 +60,10 @@ export function Sidebar() {
               }}
               className={twMerge(
                 clsx(
-                  'group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-all duration-200',
+                  'group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md transition-all duration-150',
                   isActive
-                    ? 'bg-indigo-50 text-indigo-600'
-                    : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900',
+                    ? 'text-slate-900 bg-slate-200/60'
+                    : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/40',
                   isSidebarCollapsed ? 'justify-center' : 'justify-start'
                 )
               )}
@@ -76,8 +72,8 @@ export function Sidebar() {
               <item.icon
                 className={twMerge(
                   clsx(
-                    'h-5 w-5 flex-shrink-0',
-                    isActive ? 'text-indigo-600' : 'text-gray-400 group-hover:text-gray-500',
+                    'h-4 w-4 flex-shrink-0 transition-colors',
+                    isActive ? 'text-slate-900' : 'text-slate-400 group-hover:text-slate-900',
                     isSidebarCollapsed ? 'mr-0' : 'mr-3'
                   )
                 )}
@@ -85,7 +81,7 @@ export function Sidebar() {
               />
               {!isSidebarCollapsed && (
                 <motion.span
-                  initial={{ opacity: 0, x: -10 }}
+                  initial={{ opacity: 0, x: -5 }}
                   animate={{ opacity: 1, x: 0 }}
                   className="whitespace-nowrap"
                 >
@@ -96,6 +92,21 @@ export function Sidebar() {
           );
         })}
       </nav>
+
+      {!isSidebarCollapsed && (
+        <div className="p-4 mt-auto border-t border-slate-200/50">
+          <div className="rounded-xl bg-white p-3 border border-slate-200 shadow-sm">
+            <p className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-2">Pro Plan</p>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[13px] font-semibold text-slate-700">Usage Tracker</span>
+              <span className="text-[11px] text-indigo-600 font-bold">85%</span>
+            </div>
+            <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+              <div className="h-full bg-indigo-500 rounded-full" style={{ width: '85%' }} />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 

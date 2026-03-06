@@ -61,110 +61,102 @@ export function TransactionForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl p-6 md:p-8">
-      <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-6">
         <div className="sm:col-span-3">
-          <label htmlFor="type" className="block text-sm font-medium leading-6 text-gray-900">
+          <label htmlFor="type" className="block text-[13px] font-bold text-slate-700 mb-2">
             Transaction Type
           </label>
-          <div className="mt-2">
-            <select
-              id="type"
-              {...register('type')}
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-            >
-              <option value="expense">Expense</option>
-              <option value="income">Income</option>
-            </select>
-          </div>
+          <select
+            id="type"
+            {...register('type')}
+            className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-[14px] text-slate-900 transition-all focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 outline-none"
+          >
+            <option value="expense">Expense</option>
+            <option value="income">Income</option>
+          </select>
         </div>
 
         <div className="sm:col-span-3">
-          <label htmlFor="amount" className="block text-sm font-medium leading-6 text-gray-900">
+          <label htmlFor="amount" className="block text-[13px] font-bold text-slate-700 mb-2">
             Amount
           </label>
-          <div className="mt-2 relative rounded-md shadow-sm">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <span className="text-gray-500 sm:text-sm">$</span>
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+              <span className="text-slate-400 text-sm">$</span>
             </div>
             <input
               type="number"
               step="0.01"
               id="amount"
               {...register('amount', { valueAsNumber: true })}
-              className="block w-full rounded-md border-0 py-1.5 pl-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-8 pr-4 py-2.5 text-[14px] text-slate-900 transition-all focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 outline-none placeholder:text-slate-400"
               placeholder="0.00"
             />
           </div>
-          {errors.amount && <p className="mt-2 text-sm text-red-600">{errors.amount.message}</p>}
+          {errors.amount && <p className="mt-2 text-xs font-medium text-rose-500">{errors.amount.message}</p>}
         </div>
 
         <div className="sm:col-span-3">
-          <label htmlFor="category" className="block text-sm font-medium leading-6 text-gray-900">
+          <label htmlFor="category" className="block text-[13px] font-bold text-slate-700 mb-2">
             Category
           </label>
-          <div className="mt-2">
-            <select
-              id="category"
-              {...register('category')}
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-            >
-              <option value="">Select a category</option>
-              {categories.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>
-              ))}
-            </select>
-          </div>
-          {errors.category && <p className="mt-2 text-sm text-red-600">{errors.category.message}</p>}
+          <select
+            id="category"
+            {...register('category')}
+            className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-[14px] text-slate-900 transition-all focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 outline-none"
+          >
+            <option value="">Select a category</option>
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
+          {errors.category && <p className="mt-2 text-xs font-medium text-rose-500">{errors.category.message}</p>}
         </div>
 
         <div className="sm:col-span-3">
-          <label htmlFor="date" className="block text-sm font-medium leading-6 text-gray-900">
+          <label htmlFor="date" className="block text-[13px] font-bold text-slate-700 mb-2">
             Date
           </label>
-          <div className="mt-2">
-            <input
-              type="date"
-              id="date"
-              {...register('date')}
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-            />
-          </div>
-          {errors.date && <p className="mt-2 text-sm text-red-600">{errors.date.message}</p>}
+          <input
+            type="date"
+            id="date"
+            {...register('date')}
+            className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-[14px] text-slate-900 transition-all focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 outline-none"
+          />
+          {errors.date && <p className="mt-2 text-xs font-medium text-rose-500">{errors.date.message}</p>}
         </div>
 
         <div className="col-span-full">
-          <label htmlFor="description" className="block text-sm font-medium leading-6 text-gray-900">
+          <label htmlFor="description" className="block text-[13px] font-bold text-slate-700 mb-2">
             Description (Optional)
           </label>
-          <div className="mt-2">
-            <input
-              type="text"
-              id="description"
-              {...register('description')}
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              placeholder="Groceries, Rent, etc."
-            />
-          </div>
+          <input
+            type="text"
+            id="description"
+            {...register('description')}
+            className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-[14px] text-slate-900 transition-all focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 outline-none placeholder:text-slate-400"
+            placeholder="e.g. Weekly Groceries"
+          />
         </div>
       </div>
 
-      <div className="mt-6 flex items-center justify-end gap-x-6">
+      <div className="flex items-center justify-end gap-x-4 pt-4 border-t border-slate-100">
         <button
           type="button"
           onClick={() => reset()}
-          className="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-700"
+          className="px-4 py-2 text-[13px] font-bold text-slate-500 hover:text-slate-700 transition-colors"
         >
           Reset
         </button>
         <button
           type="submit"
           disabled={isSubmitting}
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50"
+          className="rounded-lg bg-indigo-600 px-6 py-2 text-[13px] font-bold text-white shadow-sm shadow-indigo-200 hover:bg-indigo-500 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
         >
-          Add Transaction
+          {isSubmitting ? 'Adding...' : 'Add Transaction'}
         </button>
       </div>
     </form>

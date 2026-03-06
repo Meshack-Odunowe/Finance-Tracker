@@ -6,13 +6,19 @@ interface CategoryBarChartProps {
   data: { name: string; value: number }[];
 }
 
-const COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#f43f5e', '#f97316', '#eab308', '#22c55e', '#14b8a6', '#0ea5e9'];
+// Updated COLORS to a monochromatic Slate palette
+const COLORS = [
+  '#64748b', // Slate 500
+  '#475569', // Slate 600
+  '#334155', // Slate 700
+  '#1e293b', // Slate 800
+];
 
 export function CategoryBarChart({ data }: CategoryBarChartProps) {
   if (data.length === 0) {
     return (
-      <div className="flex h-64 items-center justify-center rounded-xl border border-dashed border-gray-300 bg-gray-50">
-        <p className="text-sm text-gray-500">No spending data available</p>
+      <div className="flex h-64 items-center justify-center rounded-2xl border border-slate-200 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+        <p className="text-sm text-slate-500">No spending data available</p>
       </div>
     );
   }
@@ -29,20 +35,21 @@ export function CategoryBarChart({ data }: CategoryBarChartProps) {
             bottom: 5,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
-          <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#6B7280', fontSize: 12 }} />
-          <YAxis 
-            axisLine={false} 
-            tickLine={false} 
-            tick={{ fill: '#6B7280', fontSize: 12 }}
+          {/* Subtle grid lines */}
+          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+          <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
+          <YAxis
+            axisLine={false}
+            tickLine={false}
+            tick={{ fill: '#64748b', fontSize: 12 }}
             tickFormatter={(value) => `$${value}`}
           />
           <Tooltip
-            cursor={{ fill: '#F3F4F6' }}
+            cursor={{ fill: '#f8f9fb' }}
             formatter={(value: any) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(value))}
-            contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+            contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', fontSize: '12px' }}
           />
-          <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+          <Bar dataKey="value" barSize={32} radius={[6, 6, 0, 0]}>
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
