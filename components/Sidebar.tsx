@@ -63,6 +63,12 @@ export function Sidebar() {
         >
           {isSidebarCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
         </button>
+        <button
+          onClick={closeMobileMenu}
+          className="flex md:hidden items-center justify-center h-8 w-8 rounded-lg hover:bg-slate-200/50 dark:hover:bg-slate-800 text-slate-400 dark:text-slate-500 transition-colors"
+        >
+          <X size={18} />
+        </button>
       </div>
 
       <nav className="flex-1 space-y-0.5 px-3 py-6 overflow-y-auto">
@@ -154,14 +160,14 @@ export function Sidebar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={closeMobileMenu}
-              className="absolute inset-0 bg-gray-600 bg-opacity-75 transition-opacity"
+              className="absolute inset-0 bg-slate-900/60 dark:bg-slate-950/80 backdrop-blur-sm transition-opacity"
             />
             <motion.aside
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="relative flex w-full max-w-xs flex-1 flex-col bg-white h-full"
+              className="relative flex w-full max-w-xs flex-1 flex-col bg-white dark:bg-slate-950 h-full shadow-2xl"
             >
               {sidebarContent}
             </motion.aside>

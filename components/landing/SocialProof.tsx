@@ -1,6 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
+
+const MotionImage = motion(Image);
 
 export function SocialProof() {
     const logos = [
@@ -27,12 +30,14 @@ export function SocialProof() {
                     className="flex justify-center items-center gap-x-16 gap-y-10 flex-wrap opacity-60 dark:opacity-40 grayscale hover:grayscale-0 transition-all duration-700 hover:opacity-100 dark:hover:opacity-100 dark:invert contrast-125"
                 >
                     {logos.map((logo, index) => (
-                        <motion.img
+                        <MotionImage
                             key={index}
                             whileHover={{ scale: 1.05 }}
-                            className="h-10 w-auto object-contain mix-blend-multiply dark:mix-blend-normal"
+                            className="h-8 w-auto object-contain mix-blend-multiply dark:mix-blend-normal"
                             src={logo.src}
                             alt={logo.name}
+                            width={120}
+                            height={40}
                         />
                     ))}
                 </motion.div>
