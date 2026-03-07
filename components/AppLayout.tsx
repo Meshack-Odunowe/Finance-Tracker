@@ -7,7 +7,7 @@ import { DashboardHeader } from '@/components/DashboardHeader';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isAuthPage = pathname.startsWith('/auth');
+  const isAuthPage = pathname.startsWith('/auth') && pathname !== '/auth/change-password';
   const isLandingPage = pathname === '/';
 
   if (isAuthPage || isLandingPage) {

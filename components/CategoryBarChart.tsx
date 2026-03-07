@@ -73,6 +73,8 @@ export function CategoryBarChart({ data }: CategoryBarChartProps) {
               backgroundColor: isDark ? '#0f172a' : '#ffffff',
               color: isDark ? '#f8fafc' : '#0f172a'
             }}
+            itemStyle={{ color: isDark ? '#f8fafc' : '#0f172a' }}
+            labelStyle={{ color: isDark ? '#f8fafc' : '#0f172a', fontWeight: 'bold', marginBottom: '4px' }}
           />
           <Bar dataKey="value" barSize={32} radius={[6, 6, 0, 0]}>
             {data.map((entry, index) => (

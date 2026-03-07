@@ -10,6 +10,11 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 export const metadata: Metadata = {
   title: 'Capital • Personal Finance',
   description: 'Manage your wealth with precision and clarity.',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/icon.png',
+    apple: '/icon.png',
+  },
 };
 
 export const viewport: Viewport = {

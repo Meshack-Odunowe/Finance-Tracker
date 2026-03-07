@@ -81,7 +81,7 @@ export function TransactionList({ transactions, limit, showDelete = false }: Tra
               </td>
               <td className={twMerge(
                 'whitespace-nowrap px-3 py-4 text-[13px] text-right font-mono font-semibold border-b border-slate-100 dark:border-slate-800 transition-colors duration-300',
-                transaction.type === 'income' ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-white'
+                transaction.type === 'income' ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600'
               )}>
                 {transaction.type === 'income' ? '+' : '-'}{formatCurrency(transaction.amount)}
               </td>

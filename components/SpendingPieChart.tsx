@@ -79,6 +79,8 @@ export function SpendingPieChart({ data }: SpendingPieChartProps) {
               backgroundColor: isDark ? '#0f172a' : '#ffffff',
               color: isDark ? '#f8fafc' : '#0f172a'
             }}
+            itemStyle={{ color: isDark ? '#f8fafc' : '#0f172a' }}
+            labelStyle={{ color: isDark ? '#f8fafc' : '#0f172a', fontWeight: 'bold', marginBottom: '4px' }}
           />
           <Legend
             wrapperStyle={{ fontSize: '12px', color: isDark ? '#cbd5e1' : '#64748b' }}
