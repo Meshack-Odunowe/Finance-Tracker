@@ -12,7 +12,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   if (isAuthPage || isLandingPage) {
     return (
-      <div className="min-h-screen bg-[#fbfbfc]">
+      <div className="min-h-screen bg-[#fbfbfc] dark:bg-slate-900 transition-colors duration-300">
         <main className="flex-1">
           {children}
         </main>
@@ -22,7 +22,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="flex h-screen bg-[#fbfbfc] overflow-hidden">
+    <div className="flex h-screen bg-[#fbfbfc] dark:bg-slate-900 overflow-hidden transition-colors duration-300">
 
       {/* Sidebar handles both desktop and mobile overlay */}
       <Sidebar />
