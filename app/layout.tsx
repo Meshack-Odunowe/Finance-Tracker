@@ -1,9 +1,12 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Geist } from 'next/font/google';
 import './globals.css';
 import AppLayout from '@/components/AppLayout';
 import { StoreInitializer } from '@/components/StoreInitializer';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -26,7 +29,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable}`} suppressHydrationWarning>
+    <html lang="en" className={cn(inter.variable, "font-sans", geist.variable)} suppressHydrationWarning>
       <body className="font-sans antialiased text-slate-900 bg-[#fbfbfc] dark:bg-slate-900 dark:text-slate-50 transition-colors duration-300" suppressHydrationWarning>
         <ThemeProvider>
           <StoreInitializer />
