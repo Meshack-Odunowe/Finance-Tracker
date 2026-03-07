@@ -2,22 +2,39 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, ReceiptText, PlusCircle, PieChart, Wallet, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { LayoutDashboard, ReceiptText, PlusCircle, PieChart, Wallet, ChevronLeft, ChevronRight, X, LogOut, Shield } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { useUIStore } from '@/store/useUIStore';
 import { motion, AnimatePresence } from 'motion/react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 const navItems = [
-  { name: 'Dashboard', href: '/', icon: LayoutDashboard },
+  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Transactions', href: '/transactions', icon: ReceiptText },
   { name: 'Add Transaction', href: '/add-transaction', icon: PlusCircle },
   { name: 'Budget', href: '/budget', icon: PieChart },
+  { name: 'Security', href: '/auth/change-password', icon: Shield },
 ];
 
 export function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const { isSidebarCollapsed, toggleSidebar, isMobileMenuOpen, closeMobileMenu } = useUIStore();
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('/api/auth/logout', { method: 'POST' });
+      if (response.ok) {
+        toast.success('Logged out successfully');
+        router.push('/auth/login');
+        router.refresh();
+      }
+    } catch (error) {
+      toast.error('Logout failed');
+    }
+  };
 
   const sidebarContent = (
     <div className={twMerge(
@@ -93,8 +110,8 @@ export function Sidebar() {
         })}
       </nav>
 
-      {!isSidebarCollapsed && (
-        <div className="p-4 mt-auto border-t border-slate-200/50">
+      <div className="p-4 mt-auto border-t border-slate-200/50 space-y-4">
+        {!isSidebarCollapsed && (
           <div className="rounded-xl bg-white p-3 border border-slate-200 shadow-sm">
             <p className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-2">Pro Plan</p>
             <div className="flex items-center justify-between mb-2">
@@ -105,10 +122,21 @@ export function Sidebar() {
               <div className="h-full bg-indigo-500 rounded-full" style={{ width: '85%' }} />
             </div>
           </div>
-        </div>
-      )}
+        )}
+        <button
+          onClick={handleLogout}
+          className={twMerge(
+            "flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md transition-all duration-150 text-slate-500 hover:text-red-600 hover:bg-red-50 w-full",
+            isSidebarCollapsed ? "justify-center" : "justify-start"
+          )}
+        >
+          <LogOut className={twMerge("h-4 w-4 shrink-0", isSidebarCollapsed ? "mr-0" : "mr-3")} />
+          {!isSidebarCollapsed && <span>Log Out</span>}
+        </button>
+      </div>
     </div>
   );
+
 
   return (
     <>

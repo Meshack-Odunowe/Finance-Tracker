@@ -1,16 +1,24 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
 
 export async function GET(request: Request) {
     try {
+        const session = await getSession();
+        if (!session) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
         const { searchParams } = new URL(request.url);
         const search = searchParams.get('search');
         const category = searchParams.get('category');
         const startDate = searchParams.get('startDate');
         const endDate = searchParams.get('endDate');
 
+        console.log('Fetching transactions for user:', session.userId);
         const transactions = await prisma.transaction.findMany({
             where: {
+                userId: session.userId,
                 AND: [
                     search ? { description: { contains: search, mode: 'insensitive' } } : {},
                     category ? { category: { equals: category } } : {},
@@ -18,7 +26,7 @@ export async function GET(request: Request) {
                     endDate ? { date: { lte: new Date(endDate) } } : {},
                 ],
             },
-            orderBy: { date: 'desc' },
+            orderBy: [{ date: 'desc' }, { createdAt: 'desc' }],
         });
 
         return NextResponse.json(transactions);
@@ -28,13 +36,20 @@ export async function GET(request: Request) {
     }
 }
 
+
 export async function POST(request: Request) {
     try {
+        const session = await getSession();
+        if (!session) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
         const body = await request.json();
         const { amount, type, category, description, date } = body;
 
         const transaction = await prisma.transaction.create({
             data: {
+                userId: session.userId,
                 amount,
                 type,
                 category,
@@ -53,3 +68,4 @@ export async function POST(request: Request) {
         }, { status: 500 });
     }
 }
+

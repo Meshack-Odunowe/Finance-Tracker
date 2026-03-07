@@ -7,9 +7,9 @@ interface FinanceState {
   isLoading: boolean;
   error: string | null;
   fetchData: () => Promise<void>;
-  addTransaction: (transaction: Omit<Transaction, 'id'>) => Promise<void>;
+  addTransaction: (transaction: Omit<Transaction, 'id' | 'userId'>) => Promise<void>;
   deleteTransaction: (id: string) => Promise<void>;
-  setBudget: (budget: Budget) => Promise<void>;
+  setBudget: (budget: Omit<Budget, 'id' | 'userId'>) => Promise<void>;
   deleteBudget: (category: string) => Promise<void>;
 }
 

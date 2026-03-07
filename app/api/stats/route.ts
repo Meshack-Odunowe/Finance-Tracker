@@ -1,9 +1,15 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
 import { startOfMonth, endOfMonth } from 'date-fns';
 
 export async function GET(request: Request) {
     try {
+        const session = await getSession();
+        if (!session) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
         const { searchParams } = new URL(request.url);
         const monthStr = searchParams.get('month'); // e.g. "2026-03"
         const now = monthStr ? new Date(monthStr) : new Date();
@@ -15,14 +21,18 @@ export async function GET(request: Request) {
         const [transactions, budgets] = await Promise.all([
             prisma.transaction.findMany({
                 where: {
+                    userId: session.userId,
                     date: {
                         gte: monthStart,
                         lte: monthEnd,
                     },
                 },
             }),
-            prisma.budget.findMany(),
+            prisma.budget.findMany({
+                where: { userId: session.userId }
+            }),
         ]);
+
 
         const totalIncome = transactions
             .filter((t) => t.type === 'income')

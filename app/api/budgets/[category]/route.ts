@@ -1,14 +1,25 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { getSession } from '@/lib/auth';
 
 export async function GET(
     request: Request,
     { params }: { params: Promise<{ category: string }> }
 ) {
     try {
+        const session = await getSession();
+        if (!session) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
         const { category } = await params;
         const budget = await prisma.budget.findUnique({
-            where: { category },
+            where: {
+                userId_category: {
+                    userId: session.userId,
+                    category
+                }
+            },
         });
 
         if (!budget) {
@@ -27,12 +38,22 @@ export async function PATCH(
     { params }: { params: Promise<{ category: string }> }
 ) {
     try {
+        const session = await getSession();
+        if (!session) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
         const { category } = await params;
         const body = await request.json();
         const { limit } = body;
 
         const budget = await prisma.budget.update({
-            where: { category },
+            where: {
+                userId_category: {
+                    userId: session.userId,
+                    category
+                }
+            },
             data: { limit },
         });
 
@@ -48,9 +69,19 @@ export async function DELETE(
     { params }: { params: Promise<{ category: string }> }
 ) {
     try {
+        const session = await getSession();
+        if (!session) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
         const { category } = await params;
         await prisma.budget.delete({
-            where: { category },
+            where: {
+                userId_category: {
+                    userId: session.userId,
+                    category
+                }
+            },
         });
         return NextResponse.json({ success: true });
     } catch (error) {
@@ -58,3 +89,4 @@ export async function DELETE(
         return NextResponse.json({ error: 'Failed to delete budget' }, { status: 500 });
     }
 }
+

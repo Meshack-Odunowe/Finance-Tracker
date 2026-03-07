@@ -7,8 +7,29 @@ datasource db {
   provider = "postgresql"
 }
 
+
+
+
+model User {
+  id               String        @id @default(uuid())
+  name             String
+  email            String        @unique
+  password         String
+  isVerified       Boolean       @default(false)
+  otp              String?
+  otpExpiry        DateTime?
+  resetToken       String?
+  resetTokenExpiry DateTime?
+  transactions     Transaction[]
+  budgets          Budget[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+}
+
 model Transaction {
   id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   amount      Float
   type        String
   category    String
@@ -19,8 +40,14 @@ model Transaction {
 }
 
 model Budget {
-  category    String   @id
-  limit       Float
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category  String
+  limit     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, category])
 }
+

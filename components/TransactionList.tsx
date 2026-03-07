@@ -27,7 +27,11 @@ export function TransactionList({ transactions, limit, showDelete = false }: Tra
   };
 
   const sortedTransactions = [...transactions].sort((a, b) => {
-    return new Date(b.date).getTime() - new Date(a.date).getTime();
+    const dateDiff = new Date(b.date).getTime() - new Date(a.date).getTime();
+    if (dateDiff === 0 && a.createdAt && b.createdAt) {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    }
+    return dateDiff;
   });
 
   const displayTransactions = limit ? sortedTransactions.slice(0, limit) : sortedTransactions;
