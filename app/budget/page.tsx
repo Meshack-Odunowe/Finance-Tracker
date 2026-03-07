@@ -8,6 +8,15 @@ import { EXPENSE_CATEGORIES } from '@/utils/categoryHelpers';
 import { PlusCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+
 export default function BudgetPage() {
   const isHydrated = useHydration();
   const budgets = useFinanceStore((state) => state.budgets);
@@ -55,7 +64,7 @@ export default function BudgetPage() {
   );
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 animate-in fade-in duration-500">
       <div className="sm:flex sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold leading-7 text-slate-900 dark:text-white sm:truncate sm:text-3xl sm:tracking-tight transition-colors">
@@ -69,7 +78,7 @@ export default function BudgetPage() {
           {!isAdding && availableCategories.length > 0 && (
             <button
               onClick={() => setIsAdding(true)}
-              className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all active:scale-95"
             >
               Add Budget
             </button>
@@ -78,27 +87,25 @@ export default function BudgetPage() {
       </div>
 
       {isAdding && (
-        <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm ring-1 ring-slate-900/5 dark:ring-slate-800 mb-8 max-w-2xl transition-colors">
+        <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-none border border-slate-200 dark:border-slate-800 mb-8 max-w-2xl transition-colors">
           <h3 className="text-base font-semibold leading-6 text-slate-900 dark:text-white mb-4 transition-colors">Create New Budget</h3>
-          <form onSubmit={handleAddBudget} className="flex flex-col sm:flex-row gap-4 items-end">
+          <form onSubmit={handleAddBudget} className="flex flex-col sm:flex-row gap-6 items-end">
             <div className="w-full sm:w-1/2">
-              <label htmlFor="category" className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-300 transition-colors">
+              <Label htmlFor="category" className="block text-sm font-medium leading-6 text-slate-700 dark:text-slate-300 transition-colors">
                 Category
-              </label>
-              <select
-                id="category"
-                value={newCategory}
-                onChange={(e) => setNewCategory(e.target.value)}
-                className="mt-2 block w-full rounded-md border-0 py-1.5 text-slate-900 dark:text-white bg-white dark:bg-slate-800 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-700 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 transition-colors"
-                required
-              >
-                <option value="">Select a category</option>
-                {availableCategories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </select>
+              </Label>
+              <Select value={newCategory} onValueChange={(val) => val && setNewCategory(val)}>
+                <SelectTrigger id="category" className="mt-2 w-full h-11 rounded-lg bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+                  <SelectValue placeholder="Select a category" />
+                </SelectTrigger>
+                <SelectContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
+                  {availableCategories.map((cat) => (
+                    <SelectItem key={cat} value={cat}>
+                      {cat}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="w-full sm:w-1/2">
               <label htmlFor="limit" className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-300 transition-colors">

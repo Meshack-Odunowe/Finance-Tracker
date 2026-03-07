@@ -5,6 +5,14 @@ import { useFinanceStore } from '@/store/useFinanceStore';
 import { useHydration } from '@/hooks/useHydration';
 import { TransactionList } from '@/components/TransactionList';
 import { DEFAULT_CATEGORIES } from '@/utils/categoryHelpers';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 export default function TransactionsPage() {
   const isHydrated = useHydration();
@@ -24,7 +32,7 @@ export default function TransactionsPage() {
     : transactions.filter(t => t.category === filterCategory);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 animate-in fade-in duration-500">
       <div className="sm:flex sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold leading-7 text-slate-900 dark:text-white sm:truncate sm:text-3xl sm:tracking-tight transition-colors">
@@ -37,30 +45,30 @@ export default function TransactionsPage() {
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
           <a
             href="/add-transaction"
-            className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all active:scale-95"
           >
             Add Transaction
           </a>
         </div>
       </div>
 
-      <div className="flex items-center space-x-4">
-        <label htmlFor="category-filter" className="text-sm font-medium text-slate-700 dark:text-slate-300 transition-colors">
+      <div className="flex items-center space-x-4 bg-white/50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-200 dark:border-slate-800 backdrop-blur-sm transition-colors">
+        <Label htmlFor="category-filter" className="text-sm font-medium text-slate-700 dark:text-slate-300">
           Filter by Category:
-        </label>
-        <select
-          id="category-filter"
-          value={filterCategory}
-          onChange={(e) => setFilterCategory(e.target.value)}
-          className="block w-48 rounded-md border-0 py-1.5 text-slate-900 dark:text-white bg-white dark:bg-slate-800 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-700 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 transition-colors"
-        >
-          <option value="All">All Categories</option>
-          {DEFAULT_CATEGORIES.map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
+        </Label>
+        <Select value={filterCategory} onValueChange={(val) => val && setFilterCategory(val)}>
+          <SelectTrigger id="category-filter" className="w-48 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg">
+            <SelectValue placeholder="All Categories" />
+          </SelectTrigger>
+          <SelectContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
+            <SelectItem value="All">All Categories</SelectItem>
+            {DEFAULT_CATEGORIES.map((cat: string) => (
+              <SelectItem key={cat} value={cat}>
+                {cat}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       <TransactionList transactions={filteredTransactions} showDelete={true} />

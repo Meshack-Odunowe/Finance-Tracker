@@ -1,12 +1,20 @@
 'use client';
 
-import { useForm, useWatch } from 'react-hook-form';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useFinanceStore } from '@/store/useFinanceStore';
 import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '@/utils/categoryHelpers';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 const transactionSchema = z.object({
   amount: z.number().positive('Amount must be positive'),
@@ -34,6 +42,7 @@ export function TransactionForm() {
       type: 'expense',
       date: new Date().toISOString().split('T')[0],
       description: '',
+      category: '',
     },
   });
 
@@ -64,23 +73,30 @@ export function TransactionForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-none animate-in fade-in slide-in-from-bottom-4 duration-500 transition-colors">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-6">
         <div className="sm:col-span-3">
-          <label htmlFor="type" className="block text-[13px] font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
+          <Label htmlFor="type" className="block text-[13px] font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
             Transaction Type
-          </label>
-          <select
-            id="type"
-            {...register('type')}
-            className="block w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 px-4 py-2.5 text-[14px] text-slate-900 dark:text-white transition-all focus:border-indigo-500 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-indigo-500/10 dark:focus:ring-indigo-500/20 outline-none"
-          >
-            <option value="expense">Expense</option>
-            <option value="income">Income</option>
-          </select>
+          </Label>
+          <Controller
+            name="type"
+            control={control}
+            render={({ field }) => (
+              <Select onValueChange={(val) => val && field.onChange(val)} value={field.value}>
+                <SelectTrigger id="type" className="w-full h-11 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 text-[14px]">
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
+                  <SelectItem value="expense">Expense</SelectItem>
+                  <SelectItem value="income">Income</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
         </div>
 
         <div className="sm:col-span-3">
-          <label htmlFor="amount" className="block text-[13px] font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
+          <Label htmlFor="amount" className="block text-[13px] font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
             Amount
-          </label>
+          </Label>
           <div className="relative">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
               <span className="text-slate-400 dark:text-slate-500 text-sm transition-colors">$</span>
@@ -98,21 +114,27 @@ export function TransactionForm() {
         </div>
 
         <div className="sm:col-span-3">
-          <label htmlFor="category" className="block text-[13px] font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
+          <Label htmlFor="category" className="block text-[13px] font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
             Category
-          </label>
-          <select
-            id="category"
-            {...register('category')}
-            className="block w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 px-4 py-2.5 text-[14px] text-slate-900 dark:text-white transition-all focus:border-indigo-500 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-indigo-500/10 dark:focus:ring-indigo-500/20 outline-none"
-          >
-            <option value="">Select a category</option>
-            {categories.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
+          </Label>
+          <Controller
+            name="category"
+            control={control}
+            render={({ field }) => (
+              <Select onValueChange={(val) => val && field.onChange(val)} value={field.value}>
+                <SelectTrigger id="category" className="w-full h-11 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 text-[14px]">
+                  <SelectValue placeholder="Select a category" />
+                </SelectTrigger>
+                <SelectContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
+                  {categories.map((cat) => (
+                    <SelectItem key={cat} value={cat}>
+                      {cat}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          />
           {errors.category && <p className="mt-2 text-xs font-medium text-rose-500">{errors.category.message}</p>}
         </div>
 
