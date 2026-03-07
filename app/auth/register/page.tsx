@@ -48,26 +48,26 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-4">
-            <div className="w-full max-w-md bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
+        <div className="flex flex-col items-center justify-center min-h-screen p-4 transition-colors">
+            <div className="w-full max-w-md bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-8">
                 <div className="flex flex-col items-center mb-8">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-600 mb-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-600 mb-4 shadow-lg shadow-indigo-200 dark:shadow-none">
                         <Wallet className="h-6 w-6 text-white" />
                     </div>
-                    <h1 className="text-2xl font-bold text-slate-900">Create account</h1>
-                    <p className="text-slate-500 mt-2 text-center text-sm">
+                    <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Create account</h1>
+                    <p className="text-slate-500 dark:text-slate-400 mt-2 text-center text-sm">
                         Start tracking your finances with precision
                     </p>
                 </div>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-slate-700">Full Name</label>
+                        <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Full Name</label>
                         <input
                             {...register("name")}
                             type="text"
                             placeholder="John Doe"
-                            className="w-full h-11 px-4 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                            className="w-full h-11 px-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
                         />
                         {errors.name && (
                             <p className="text-sm text-red-500">{errors.name.message}</p>
@@ -75,12 +75,12 @@ export default function RegisterPage() {
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-slate-700">Email</label>
+                        <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Email</label>
                         <input
                             {...register("email")}
                             type="email"
                             placeholder="name@example.com"
-                            className="w-full h-11 px-4 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                            className="w-full h-11 px-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
                         />
                         {errors.email && (
                             <p className="text-sm text-red-500">{errors.email.message}</p>
@@ -88,13 +88,13 @@ export default function RegisterPage() {
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-slate-700">Password</label>
+                        <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Password</label>
                         <div className="relative">
                             <input
                                 {...register("password")}
                                 type={showPassword ? "text" : "password"}
                                 placeholder="••••••••"
-                                className="w-full h-11 px-4 pr-10 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                                className="w-full h-11 px-4 pr-10 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
                             />
                             <button
                                 type="button"
@@ -107,7 +107,7 @@ export default function RegisterPage() {
                         {errors.password && (
                             <p className="text-sm text-red-500">{errors.password.message}</p>
                         )}
-                        <ul className="text-xs text-slate-500 space-y-1 mt-2 list-disc pl-4">
+                        <ul className="text-xs text-slate-500 dark:text-slate-400 space-y-1 mt-2 list-disc pl-4">
                             <li>Minimum 8 characters</li>
                             <li>At least one uppercase letter</li>
                             <li>At least one number</li>
@@ -123,11 +123,11 @@ export default function RegisterPage() {
                     </button>
                 </form>
 
-                <p className="text-center mt-6 text-sm text-slate-500">
+                <p className="text-center mt-6 text-sm text-slate-500 dark:text-slate-400">
                     Already have an account?{" "}
                     <Link
                         href="/auth/login"
-                        className="text-indigo-600 hover:text-indigo-700 font-medium"
+                        className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium"
                     >
                         Sign in
                     </Link>

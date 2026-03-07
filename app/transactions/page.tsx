@@ -27,6 +27,12 @@ export default function TransactionsPage() {
     );
   }
 
+  const allCategories = Array.from(new Set([
+    'All',
+    ...DEFAULT_CATEGORIES,
+    ...transactions.map(t => t.category)
+  ]));
+
   const filteredTransactions = filterCategory === 'All'
     ? transactions
     : transactions.filter(t => t.category === filterCategory);
@@ -60,11 +66,10 @@ export default function TransactionsPage() {
           <SelectTrigger id="category-filter" className="w-48 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg">
             <SelectValue placeholder="All Categories" />
           </SelectTrigger>
-          <SelectContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
-            <SelectItem value="All">All Categories</SelectItem>
-            {DEFAULT_CATEGORIES.map((cat: string) => (
+          <SelectContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 max-h-80">
+            {allCategories.map((cat) => (
               <SelectItem key={cat} value={cat}>
-                {cat}
+                {cat === 'All' ? 'All Categories' : cat}
               </SelectItem>
             ))}
           </SelectContent>

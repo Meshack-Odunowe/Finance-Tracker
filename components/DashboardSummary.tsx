@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowDownRight, ArrowUpRight, DollarSign, Activity } from 'lucide-react';
+import { ArrowDownRight, ArrowUpRight, Wallet, Activity } from 'lucide-react';
 import { formatCurrency } from '@/utils/formatters';
 import { twMerge } from 'tailwind-merge';
 
@@ -21,7 +21,7 @@ export function DashboardSummary({
     {
       name: 'Total Balance',
       value: formatCurrency(remainingBalance),
-      icon: DollarSign,
+      icon: Wallet,
       color: remainingBalance >= 0 ? 'text-slate-900 dark:text-white' : 'text-red-600 dark:text-red-400',
       bgColor: 'bg-slate-50 dark:bg-slate-800/50',
       borderColor: 'border-slate-200 dark:border-slate-800',

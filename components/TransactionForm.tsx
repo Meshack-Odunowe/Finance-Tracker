@@ -20,8 +20,17 @@ const transactionSchema = z.object({
   amount: z.number().positive('Amount must be positive'),
   type: z.enum(['income', 'expense']),
   category: z.string().min(1, 'Category is required'),
+  customCategory: z.string().optional(),
   description: z.string().optional(),
   date: z.string().min(1, 'Date is required'),
+}).refine((data) => {
+  if (data.category === 'custom' && !data.customCategory) {
+    return false;
+  }
+  return true;
+}, {
+  message: "Please enter a custom category name",
+  path: ["customCategory"],
 });
 
 type TransactionFormValues = z.infer<typeof transactionSchema>;
@@ -35,6 +44,7 @@ export function TransactionForm() {
     handleSubmit,
     control,
     reset,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionSchema),
@@ -43,16 +53,21 @@ export function TransactionForm() {
       date: new Date().toISOString().split('T')[0],
       description: '',
       category: '',
+      customCategory: '',
     },
   });
 
   const type = useWatch({ control, name: 'type' });
+  const categoryValue = useWatch({ control, name: 'category' });
   const categories = type === 'expense' ? EXPENSE_CATEGORIES : INCOME_CATEGORIES;
 
   const onSubmit = async (data: TransactionFormValues) => {
     try {
+      const finalCategory = data.category === 'custom' ? data.customCategory : data.category;
+
       await addTransaction({
         ...data,
+        category: finalCategory || '',
         description: data.description || '',
       });
       toast.success('Transaction added successfully!');
@@ -62,6 +77,7 @@ export function TransactionForm() {
         description: '',
         amount: undefined,
         category: '',
+        customCategory: '',
       });
       router.push('/transactions');
     } catch (error) {
@@ -80,7 +96,17 @@ export function TransactionForm() {
             name="type"
             control={control}
             render={({ field }) => (
-              <Select onValueChange={(val) => val && field.onChange(val)} value={field.value}>
+              <Select
+                onValueChange={(val) => {
+                  if (val) {
+                    field.onChange(val);
+                    // Reset category when type changes
+                    setValue('category', '');
+                    setValue('customCategory', '');
+                  }
+                }}
+                value={field.value}
+              >
                 <SelectTrigger id="type" className="w-full h-11 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 text-[14px]">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
@@ -99,7 +125,7 @@ export function TransactionForm() {
           </Label>
           <div className="relative">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-              <span className="text-slate-400 dark:text-slate-500 text-sm transition-colors">$</span>
+              <span className="text-slate-400 dark:text-slate-500 text-sm transition-colors">₦</span>
             </div>
             <input
               type="number"
@@ -131,12 +157,29 @@ export function TransactionForm() {
                       {cat}
                     </SelectItem>
                   ))}
+                  <SelectItem value="custom" className="text-indigo-600 dark:text-indigo-400 font-medium">+ Add Custom Category</SelectItem>
                 </SelectContent>
               </Select>
             )}
           />
           {errors.category && <p className="mt-2 text-xs font-medium text-rose-500">{errors.category.message}</p>}
         </div>
+
+        {categoryValue === 'custom' && (
+          <div className="sm:col-span-3 animate-in fade-in slide-in-from-top-2 duration-300">
+            <Label htmlFor="customCategory" className="block text-[13px] font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
+              Custom Category Name
+            </Label>
+            <input
+              type="text"
+              id="customCategory"
+              {...register('customCategory')}
+              className="block w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 px-4 py-2.5 text-[14px] text-slate-900 dark:text-white transition-all focus:border-indigo-500 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-indigo-500/10 dark:focus:ring-indigo-500/20 outline-none placeholder:text-slate-400 dark:placeholder:text-slate-500"
+              placeholder="e.g. Health, Gift, etc."
+            />
+            {errors.customCategory && <p className="mt-2 text-xs font-medium text-rose-500">{errors.customCategory.message}</p>}
+          </div>
+        )}
 
         <div className="sm:col-span-3">
           <label htmlFor="date" className="block text-[13px] font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">

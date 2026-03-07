@@ -55,26 +55,26 @@ function LoginForm() {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-4">
-            <div className="w-full max-w-md bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
+        <div className="flex flex-col items-center justify-center min-h-screen p-4 transition-colors">
+            <div className="w-full max-w-md bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-8">
                 <div className="flex flex-col items-center mb-8">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-600 mb-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-600 mb-4 shadow-lg shadow-indigo-200 dark:shadow-none">
                         <Wallet className="h-6 w-6 text-white" />
                     </div>
-                    <h1 className="text-2xl font-bold text-slate-900">Sign in</h1>
-                    <p className="text-slate-500 mt-2 text-center text-sm">
+                    <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Sign in</h1>
+                    <p className="text-slate-500 dark:text-slate-400 mt-2 text-center text-sm">
                         Enter your details to access your account
                     </p>
                 </div>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-slate-700">Email</label>
+                        <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Email</label>
                         <input
                             {...register("email")}
                             type="email"
                             placeholder="name@example.com"
-                            className="w-full h-11 px-4 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                            className="w-full h-11 px-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
                         />
                         {errors.email && (
                             <p className="text-sm text-red-500">{errors.email.message}</p>
@@ -83,10 +83,10 @@ function LoginForm() {
 
                     <div className="space-y-2">
                         <div className="flex items-center justify-between">
-                            <label className="text-sm font-medium text-slate-700">Password</label>
+                            <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Password</label>
                             <Link
                                 href="/auth/forgot-password"
-                                className="text-sm text-indigo-600 hover:text-indigo-700 font-medium"
+                                className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium"
                             >
                                 Forgot?
                             </Link>
@@ -96,7 +96,7 @@ function LoginForm() {
                                 {...register("password")}
                                 type={showPassword ? "text" : "password"}
                                 placeholder="••••••••"
-                                className="w-full h-11 px-4 pr-10 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                                className="w-full h-11 px-4 pr-10 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
                             />
                             <button
                                 type="button"
@@ -120,11 +120,11 @@ function LoginForm() {
                     </button>
                 </form>
 
-                <p className="text-center mt-6 text-sm text-slate-500">
+                <p className="text-center mt-6 text-sm text-slate-500 dark:text-slate-400">
                     Don&apos;t have an account?{" "}
                     <Link
                         href="/auth/register"
-                        className="text-indigo-600 hover:text-indigo-700 font-medium"
+                        className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium"
                     >
                         Create one
                     </Link>

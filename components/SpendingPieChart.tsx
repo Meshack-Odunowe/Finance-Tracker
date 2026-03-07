@@ -70,7 +70,7 @@ export function SpendingPieChart({ data }: SpendingPieChartProps) {
             ))}
           </Pie>
           <Tooltip
-            formatter={(value: any) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(value))}
+            formatter={(value: any) => new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(Number(value))}
             contentStyle={{
               borderRadius: '12px',
               border: isDark ? '1px solid #334155' : '1px solid #e2e8f0',

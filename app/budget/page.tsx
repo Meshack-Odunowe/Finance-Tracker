@@ -113,7 +113,7 @@ export default function BudgetPage() {
               </label>
               <div className="mt-2 relative rounded-md shadow-sm">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <span className="text-slate-500 dark:text-slate-400 sm:text-sm transition-colors">$</span>
+                  <span className="text-slate-400 dark:text-slate-500 sm:text-sm transition-colors">₦</span>
                 </div>
                 <input
                   type="number"

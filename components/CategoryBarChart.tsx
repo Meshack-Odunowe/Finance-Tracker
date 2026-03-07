@@ -60,11 +60,11 @@ export function CategoryBarChart({ data }: CategoryBarChartProps) {
             axisLine={false}
             tickLine={false}
             tick={{ fill: isDark ? '#94a3b8' : '#64748b', fontSize: 12 }}
-            tickFormatter={(value) => `$${value}`}
+            tickFormatter={(value) => `₦${value}`}
           />
           <Tooltip
             cursor={{ fill: isDark ? '#1e293b' : '#f8f9fb' }}
-            formatter={(value: any) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(value))}
+            formatter={(value: any) => new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(Number(value))}
             contentStyle={{
               borderRadius: '12px',
               border: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
