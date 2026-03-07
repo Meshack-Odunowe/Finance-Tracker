@@ -85,7 +85,7 @@ function VerifyOTPContent() {
                 </form>
 
                 <p className="text-center mt-6 text-sm text-slate-500">
-                    Didn't receive the code?{" "}
+                    Didn&apos;t receive the code?{" "}
                     <button
                         onClick={() => router.push("/auth/register")}
                         className="text-indigo-600 hover:text-indigo-700 font-medium"
