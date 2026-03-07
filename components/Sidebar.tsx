@@ -43,7 +43,7 @@ export function Sidebar() {
       'w-64'
     )}>
       <div className="flex h-14 items-center justify-between px-5 border-b border-transparent">
-        <div className="flex items-center overflow-hidden">
+        <Link href="/" className="flex items-center overflow-hidden hover:opacity-80 transition-opacity">
           <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-600 shadow-sm shadow-indigo-200 dark:shadow-indigo-900/50">
             <Wallet className="h-4 w-4 text-white" />
           </div>
@@ -56,7 +56,7 @@ export function Sidebar() {
               Capital
             </motion.span>
           )}
-        </div>
+        </Link>
         <button
           onClick={toggleSidebar}
           className="hidden md:flex items-center justify-center h-7 w-7 rounded-md hover:bg-slate-200/50 dark:hover:bg-slate-800 text-slate-400 dark:text-slate-500 transition-colors"
