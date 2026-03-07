@@ -57,17 +57,17 @@ export function Features() {
     ];
 
     return (
-        <section id="features" className="bg-[#fbfbfc] py-24 sm:py-32 border-t border-slate-100 relative">
+        <section id="features" className="bg-[#fbfbfc] dark:bg-slate-900 py-24 sm:py-32 border-t border-slate-100 dark:border-slate-800 relative transition-colors duration-300">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
                 <div className="mx-auto max-w-2xl text-center mb-16">
-                    <h2 className="text-[15px] font-semibold tracking-wide uppercase text-indigo-600 mb-3">
+                    <h2 className="text-[15px] font-semibold tracking-wide uppercase text-indigo-600 dark:text-indigo-400 mb-3">
                         Everything you need
                     </h2>
-                    <p className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl text-pretty">
+                    <p className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl text-pretty">
                         Powerful features to manage your wealth.
                     </p>
-                    <p className="mt-4 text-lg text-slate-500 max-w-xl mx-auto">
+                    <p className="mt-4 text-lg text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
                         We stripped away the clutter to give you the exact tools you need to build better financial habits.
                     </p>
                 </div>
@@ -81,15 +81,15 @@ export function Features() {
                 >
                     <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-12 lg:max-w-none lg:grid-cols-3">
                         {features.map((feature) => (
-                            <motion.div key={feature.name} variants={item} className="flex flex-col group p-6 bg-white rounded-2xl shadow-sm border border-slate-200/60 hover:shadow-md transition-shadow hover:border-slate-300">
-                                <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
-                                    <div className={`flex h-10 w-10 items-center justify-center rounded-lg ring-1 ring-inset ${feature.color} transition-colors`}>
+                            <motion.div key={feature.name} variants={item} className="flex flex-col group p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-700 hover:shadow-md transition-shadow hover:border-slate-300 dark:hover:border-slate-600">
+                                <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-white">
+                                    <div className={`flex h-10 w-10 items-center justify-center rounded-lg ring-1 ring-inset ${feature.color} dark:bg-slate-900/50 dark:ring-slate-700 transition-colors`}>
                                         <feature.icon className="h-5 w-5" aria-hidden="true" />
                                     </div>
                                     {feature.name}
                                 </dt>
-                                <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
-                                    <p className="flex-auto text-[15px] text-slate-500">{feature.description}</p>
+                                <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600 dark:text-gray-300">
+                                    <p className="flex-auto text-[15px] text-slate-500 dark:text-slate-400">{feature.description}</p>
                                 </dd>
                             </motion.div>
                         ))}

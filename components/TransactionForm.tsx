@@ -61,16 +61,16 @@ export function TransactionForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-none animate-in fade-in slide-in-from-bottom-4 duration-500 transition-colors">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-6">
         <div className="sm:col-span-3">
-          <label htmlFor="type" className="block text-[13px] font-bold text-slate-700 mb-2">
+          <label htmlFor="type" className="block text-[13px] font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
             Transaction Type
           </label>
           <select
             id="type"
             {...register('type')}
-            className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-[14px] text-slate-900 transition-all focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 outline-none"
+            className="block w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 px-4 py-2.5 text-[14px] text-slate-900 dark:text-white transition-all focus:border-indigo-500 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-indigo-500/10 dark:focus:ring-indigo-500/20 outline-none"
           >
             <option value="expense">Expense</option>
             <option value="income">Income</option>
@@ -78,19 +78,19 @@ export function TransactionForm() {
         </div>
 
         <div className="sm:col-span-3">
-          <label htmlFor="amount" className="block text-[13px] font-bold text-slate-700 mb-2">
+          <label htmlFor="amount" className="block text-[13px] font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
             Amount
           </label>
           <div className="relative">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-              <span className="text-slate-400 text-sm">$</span>
+              <span className="text-slate-400 dark:text-slate-500 text-sm transition-colors">$</span>
             </div>
             <input
               type="number"
               step="0.01"
               id="amount"
               {...register('amount', { valueAsNumber: true })}
-              className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-8 pr-4 py-2.5 text-[14px] text-slate-900 transition-all focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 outline-none placeholder:text-slate-400"
+              className="block w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 pl-8 pr-4 py-2.5 text-[14px] text-slate-900 dark:text-white transition-all focus:border-indigo-500 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-indigo-500/10 dark:focus:ring-indigo-500/20 outline-none placeholder:text-slate-400 dark:placeholder:text-slate-500"
               placeholder="0.00"
             />
           </div>
@@ -98,13 +98,13 @@ export function TransactionForm() {
         </div>
 
         <div className="sm:col-span-3">
-          <label htmlFor="category" className="block text-[13px] font-bold text-slate-700 mb-2">
+          <label htmlFor="category" className="block text-[13px] font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
             Category
           </label>
           <select
             id="category"
             {...register('category')}
-            className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-[14px] text-slate-900 transition-all focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 outline-none"
+            className="block w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 px-4 py-2.5 text-[14px] text-slate-900 dark:text-white transition-all focus:border-indigo-500 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-indigo-500/10 dark:focus:ring-indigo-500/20 outline-none"
           >
             <option value="">Select a category</option>
             {categories.map((cat) => (
@@ -117,44 +117,44 @@ export function TransactionForm() {
         </div>
 
         <div className="sm:col-span-3">
-          <label htmlFor="date" className="block text-[13px] font-bold text-slate-700 mb-2">
+          <label htmlFor="date" className="block text-[13px] font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
             Date
           </label>
           <input
             type="date"
             id="date"
             {...register('date')}
-            className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-[14px] text-slate-900 transition-all focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 outline-none"
+            className="block w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 px-4 py-2.5 text-[14px] text-slate-900 dark:text-white transition-all focus:border-indigo-500 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-indigo-500/10 dark:focus:ring-indigo-500/20 outline-none"
           />
           {errors.date && <p className="mt-2 text-xs font-medium text-rose-500">{errors.date.message}</p>}
         </div>
 
         <div className="col-span-full">
-          <label htmlFor="description" className="block text-[13px] font-bold text-slate-700 mb-2">
+          <label htmlFor="description" className="block text-[13px] font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
             Description (Optional)
           </label>
           <input
             type="text"
             id="description"
             {...register('description')}
-            className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-[14px] text-slate-900 transition-all focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 outline-none placeholder:text-slate-400"
+            className="block w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 px-4 py-2.5 text-[14px] text-slate-900 dark:text-white transition-all focus:border-indigo-500 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-indigo-500/10 dark:focus:ring-indigo-500/20 outline-none placeholder:text-slate-400 dark:placeholder:text-slate-500"
             placeholder="e.g. Weekly Groceries"
           />
         </div>
       </div>
 
-      <div className="flex items-center justify-end gap-x-4 pt-4 border-t border-slate-100">
+      <div className="flex items-center justify-end gap-x-4 pt-4 border-t border-slate-100 dark:border-slate-800 transition-colors">
         <button
           type="button"
           onClick={() => reset()}
-          className="px-4 py-2 text-[13px] font-bold text-slate-500 hover:text-slate-700 transition-colors"
+          className="px-4 py-2 text-[13px] font-bold text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
         >
           Reset
         </button>
         <button
           type="submit"
           disabled={isSubmitting}
-          className="rounded-lg bg-indigo-600 px-6 py-2 text-[13px] font-bold text-white shadow-sm shadow-indigo-200 hover:bg-indigo-500 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
+          className="rounded-lg bg-indigo-600 px-6 py-2 text-[13px] font-bold text-white shadow-sm shadow-indigo-200 dark:shadow-indigo-900/50 hover:bg-indigo-500 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
         >
           {isSubmitting ? 'Adding...' : 'Add Transaction'}
         </button>

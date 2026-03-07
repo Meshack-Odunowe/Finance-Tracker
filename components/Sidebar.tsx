@@ -38,20 +38,20 @@ export function Sidebar() {
 
   const sidebarContent = (
     <div className={twMerge(
-      'flex h-full flex-col border-r border-slate-200 bg-[#f8f9fb] transition-all duration-300 ease-in-out',
+      'flex h-full flex-col border-r border-slate-200 dark:border-slate-800 bg-[#f8f9fb] dark:bg-slate-950 transition-all duration-300 ease-in-out',
       isSidebarCollapsed ? 'md:w-[72px]' : 'md:w-64',
       'w-64'
     )}>
       <div className="flex h-14 items-center justify-between px-5 border-b border-transparent">
         <div className="flex items-center overflow-hidden">
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-600 shadow-sm shadow-indigo-200">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-600 shadow-sm shadow-indigo-200 dark:shadow-indigo-900/50">
             <Wallet className="h-4 w-4 text-white" />
           </div>
           {!isSidebarCollapsed && (
             <motion.span
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="ml-3 text-[15px] font-semibold text-slate-800 tracking-tight whitespace-nowrap"
+              className="ml-3 text-[15px] font-semibold text-slate-800 dark:text-slate-100 tracking-tight whitespace-nowrap"
             >
               Capital
             </motion.span>
@@ -59,7 +59,7 @@ export function Sidebar() {
         </div>
         <button
           onClick={toggleSidebar}
-          className="hidden md:flex items-center justify-center h-7 w-7 rounded-md hover:bg-slate-200/50 text-slate-400 transition-colors"
+          className="hidden md:flex items-center justify-center h-7 w-7 rounded-md hover:bg-slate-200/50 dark:hover:bg-slate-800 text-slate-400 dark:text-slate-500 transition-colors"
         >
           {isSidebarCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
         </button>
@@ -79,8 +79,8 @@ export function Sidebar() {
                 clsx(
                   'group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md transition-all duration-150',
                   isActive
-                    ? 'text-slate-900 bg-slate-200/60'
-                    : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/40',
+                    ? 'text-slate-900 dark:text-indigo-400 bg-slate-200/60 dark:bg-indigo-500/10'
+                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-200/40 dark:hover:bg-slate-800/80',
                   isSidebarCollapsed ? 'justify-center' : 'justify-start'
                 )
               )}
@@ -90,7 +90,7 @@ export function Sidebar() {
                 className={twMerge(
                   clsx(
                     'h-4 w-4 flex-shrink-0 transition-colors',
-                    isActive ? 'text-slate-900' : 'text-slate-400 group-hover:text-slate-900',
+                    isActive ? 'text-slate-900 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-900 dark:group-hover:text-slate-50',
                     isSidebarCollapsed ? 'mr-0' : 'mr-3'
                   )
                 )}
@@ -110,15 +110,15 @@ export function Sidebar() {
         })}
       </nav>
 
-      <div className="p-4 mt-auto border-t border-slate-200/50 space-y-4">
+      <div className="p-4 mt-auto border-t border-slate-200/50 dark:border-slate-800/50 space-y-4">
         {!isSidebarCollapsed && (
-          <div className="rounded-xl bg-white p-3 border border-slate-200 shadow-sm">
-            <p className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-2">Pro Plan</p>
+          <div className="rounded-xl bg-white dark:bg-slate-900 p-3 border border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-300">
+            <p className="text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Pro Plan</p>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[13px] font-semibold text-slate-700">Usage Tracker</span>
-              <span className="text-[11px] text-indigo-600 font-bold">85%</span>
+              <span className="text-[13px] font-semibold text-slate-700 dark:text-slate-300">Usage Tracker</span>
+              <span className="text-[11px] text-indigo-600 dark:text-indigo-400 font-bold">85%</span>
             </div>
-            <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+            <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
               <div className="h-full bg-indigo-500 rounded-full" style={{ width: '85%' }} />
             </div>
           </div>
@@ -126,7 +126,7 @@ export function Sidebar() {
         <button
           onClick={handleLogout}
           className={twMerge(
-            "flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md transition-all duration-150 text-slate-500 hover:text-red-600 hover:bg-red-50 w-full",
+            "flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md transition-all duration-150 text-slate-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 w-full",
             isSidebarCollapsed ? "justify-center" : "justify-start"
           )}
         >

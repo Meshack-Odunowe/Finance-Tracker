@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import AppLayout from '@/components/AppLayout';
 import { StoreInitializer } from '@/components/StoreInitializer';
+import { ThemeProvider } from '@/components/theme/ThemeProvider';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -20,10 +21,12 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable}`}>
-      <body className="font-sans antialiased text-slate-900 bg-[#fbfbfc]" suppressHydrationWarning>
-        <StoreInitializer />
-        <AppLayout>{children}</AppLayout>
+    <html lang="en" className={`${inter.variable}`} suppressHydrationWarning>
+      <body className="font-sans antialiased text-slate-900 bg-[#fbfbfc] dark:bg-slate-900 dark:text-slate-50 transition-colors duration-300" suppressHydrationWarning>
+        <ThemeProvider>
+          <StoreInitializer />
+          <AppLayout>{children}</AppLayout>
+        </ThemeProvider>
       </body>
     </html>
   );

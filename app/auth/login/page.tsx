@@ -44,7 +44,7 @@ function LoginForm() {
                 throw new Error(result.message || "Login failed");
             }
 
-            toast.success("Welcome back!");
+            toast.success("Welcome!");
             router.push(callbackUrl);
             router.refresh();
         } catch (error: any) {

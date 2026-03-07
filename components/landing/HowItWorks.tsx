@@ -26,14 +26,14 @@ export function HowItWorks() {
     ];
 
     return (
-        <section id="how-it-works" className="bg-white py-24 sm:py-32">
+        <section id="how-it-works" className="bg-white dark:bg-slate-900 py-24 sm:py-32 transition-colors duration-300">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
                 <div className="mx-auto max-w-2xl text-center mb-16">
-                    <h2 className="text-[15px] font-semibold tracking-wide uppercase text-indigo-600 mb-3">
+                    <h2 className="text-[15px] font-semibold tracking-wide uppercase text-indigo-600 dark:text-indigo-400 mb-3">
                         Getting Started
                     </h2>
-                    <p className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+                    <p className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
                         Three simple steps to financial clarity.
                     </p>
                 </div>
@@ -42,7 +42,7 @@ export function HowItWorks() {
                     <div className="grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-8 relative">
 
                         {/* Connecting line for desktop */}
-                        <div className="hidden lg:block absolute top-[44px] left-[10%] right-[10%] h-[2px] bg-slate-100 z-0"></div>
+                        <div className="hidden lg:block absolute top-[44px] left-[10%] right-[10%] h-[2px] bg-slate-100 dark:bg-slate-800 z-0 transition-colors"></div>
 
                         {steps.map((step, index) => (
                             <motion.div
@@ -53,16 +53,16 @@ export function HowItWorks() {
                                 transition={{ duration: 0.5, delay: index * 0.2 }}
                                 className="relative z-10 flex flex-col items-center text-center"
                             >
-                                <div className="mb-6 flex h-[88px] w-[88px] items-center justify-center rounded-full bg-white border-[6px] border-[#fbfbfc] shadow-sm ring-1 ring-slate-200">
-                                    <step.icon className="h-8 w-8 text-indigo-600" aria-hidden="true" />
+                                <div className="mb-6 flex h-[88px] w-[88px] items-center justify-center rounded-full bg-white dark:bg-slate-800 border-[6px] border-[#fbfbfc] dark:border-slate-900 shadow-sm ring-1 ring-slate-200 dark:ring-slate-700 transition-colors">
+                                    <step.icon className="h-8 w-8 text-indigo-600 dark:text-indigo-400" aria-hidden="true" />
                                 </div>
 
-                                <h3 className="text-xl font-semibold text-slate-900 mb-3">
-                                    <span className="text-indigo-600 mr-2 text-sm">{step.id}.</span>
+                                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3">
+                                    <span className="text-indigo-600 dark:text-indigo-400 mr-2 text-sm">{step.id}.</span>
                                     {step.name}
                                 </h3>
 
-                                <p className="text-slate-500 max-w-xs">{step.description}</p>
+                                <p className="text-slate-500 dark:text-slate-400 max-w-xs">{step.description}</p>
                             </motion.div>
                         ))}
                     </div>

@@ -58,10 +58,10 @@ export default function BudgetPage() {
     <div className="space-y-8">
       <div className="sm:flex sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+          <h1 className="text-2xl font-bold leading-7 text-slate-900 dark:text-white sm:truncate sm:text-3xl sm:tracking-tight transition-colors">
             Budgets
           </h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400 transition-colors">
             Set monthly spending limits for your categories.
           </p>
         </div>
@@ -69,7 +69,7 @@ export default function BudgetPage() {
           {!isAdding && availableCategories.length > 0 && (
             <button
               onClick={() => setIsAdding(true)}
-              className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Add Budget
             </button>
@@ -78,18 +78,18 @@ export default function BudgetPage() {
       </div>
 
       {isAdding && (
-        <div className="bg-white p-6 rounded-xl shadow-sm ring-1 ring-gray-900/5 mb-8 max-w-2xl">
-          <h3 className="text-base font-semibold leading-6 text-gray-900 mb-4">Create New Budget</h3>
+        <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm ring-1 ring-slate-900/5 dark:ring-slate-800 mb-8 max-w-2xl transition-colors">
+          <h3 className="text-base font-semibold leading-6 text-slate-900 dark:text-white mb-4 transition-colors">Create New Budget</h3>
           <form onSubmit={handleAddBudget} className="flex flex-col sm:flex-row gap-4 items-end">
             <div className="w-full sm:w-1/2">
-              <label htmlFor="category" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="category" className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-300 transition-colors">
                 Category
               </label>
               <select
                 id="category"
                 value={newCategory}
                 onChange={(e) => setNewCategory(e.target.value)}
-                className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="mt-2 block w-full rounded-md border-0 py-1.5 text-slate-900 dark:text-white bg-white dark:bg-slate-800 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-700 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 transition-colors"
                 required
               >
                 <option value="">Select a category</option>
@@ -101,12 +101,12 @@ export default function BudgetPage() {
               </select>
             </div>
             <div className="w-full sm:w-1/2">
-              <label htmlFor="limit" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="limit" className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-300 transition-colors">
                 Monthly Limit
               </label>
               <div className="mt-2 relative rounded-md shadow-sm">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <span className="text-gray-500 sm:text-sm">$</span>
+                  <span className="text-slate-500 dark:text-slate-400 sm:text-sm transition-colors">$</span>
                 </div>
                 <input
                   type="number"
@@ -114,7 +114,7 @@ export default function BudgetPage() {
                   id="limit"
                   value={newLimit}
                   onChange={(e) => setNewLimit(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 pl-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 pl-7 text-slate-900 dark:text-white bg-white dark:bg-slate-800 ring-1 ring-inset ring-slate-300 dark:ring-slate-700 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 transition-colors"
                   placeholder="0.00"
                   required
                 />
@@ -123,7 +123,7 @@ export default function BudgetPage() {
             <div className="flex gap-2 w-full sm:w-auto mt-4 sm:mt-0">
               <button
                 type="submit"
-                className="flex-1 sm:flex-none rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="flex-1 sm:flex-none rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Save
               </button>
@@ -134,7 +134,7 @@ export default function BudgetPage() {
                   setNewCategory('');
                   setNewLimit('');
                 }}
-                className="flex-1 sm:flex-none rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                className="flex-1 sm:flex-none rounded-md bg-white dark:bg-slate-800 px-3 py-2 text-sm font-semibold text-slate-900 dark:text-white shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
               >
                 Cancel
               </button>
@@ -144,19 +144,19 @@ export default function BudgetPage() {
       )}
 
       {budgets.length === 0 && !isAdding ? (
-        <div className="text-center py-12 px-4 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50">
-          <div className="mx-auto h-12 w-12 text-gray-400 flex items-center justify-center">
+        <div className="text-center py-12 px-4 border-2 border-dashed border-slate-300 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-900/50 transition-colors">
+          <div className="mx-auto h-12 w-12 text-slate-400 dark:text-slate-500 flex items-center justify-center">
             <PlusCircle className="h-8 w-8" />
           </div>
-          <h3 className="mt-2 text-sm font-semibold text-gray-900">No budgets</h3>
-          <p className="mt-1 text-sm text-gray-500 max-w-sm mx-auto">
+          <h3 className="mt-2 text-sm font-semibold text-slate-900 dark:text-white transition-colors">No budgets</h3>
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400 max-w-sm mx-auto transition-colors">
             Get started by creating a budget to track your spending limits.
           </p>
           {availableCategories.length > 0 && (
             <div className="mt-6">
               <button
                 onClick={() => setIsAdding(true)}
-                className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 <PlusCircle className="-ml-0.5 mr-1.5 h-4 w-4" aria-hidden="true" />
                 Add Budget

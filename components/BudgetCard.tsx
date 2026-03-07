@@ -55,20 +55,20 @@ export function BudgetCard({ budget }: BudgetCardProps) {
   };
 
   return (
-    <div className="bg-white overflow-hidden shadow-sm ring-1 ring-gray-900/5 rounded-xl p-6">
+    <div className="bg-white dark:bg-slate-900 overflow-hidden shadow-sm ring-1 ring-slate-900/5 dark:ring-slate-800 rounded-xl p-6 transition-colors duration-300">
       <div className="flex items-center justify-between">
-        <h3 className="text-base font-semibold leading-6 text-gray-900">{budget.category}</h3>
+        <h3 className="text-base font-semibold leading-6 text-slate-900 dark:text-white transition-colors">{budget.category}</h3>
         {!isEditing && (
           <div className="flex space-x-2">
             <button
               onClick={() => setIsEditing(true)}
-              className="text-gray-400 hover:text-indigo-600 transition-colors"
+              className="text-slate-400 dark:text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
             >
               <Edit2 className="h-4 w-4" />
             </button>
             <button
               onClick={handleDelete}
-              className="text-gray-400 hover:text-red-600 transition-colors"
+              className="text-slate-400 dark:text-slate-500 hover:text-red-600 dark:hover:text-red-400 transition-colors"
             >
               <Trash2 className="h-4 w-4" />
             </button>
@@ -80,15 +80,15 @@ export function BudgetCard({ budget }: BudgetCardProps) {
         <form onSubmit={handleSubmit(onSubmit)} className="mt-4 flex items-start space-x-2">
           <div className="relative flex-1">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <span className="text-gray-500 sm:text-sm">$</span>
+              <span className="text-slate-500 dark:text-slate-400 sm:text-sm transition-colors">$</span>
             </div>
             <input
               type="number"
               step="0.01"
               {...register('limit', { valueAsNumber: true })}
-              className="block w-full rounded-md border-0 py-1.5 pl-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="block w-full rounded-md border-0 py-1.5 pl-7 text-slate-900 dark:text-white bg-white dark:bg-slate-800 ring-1 ring-inset ring-slate-300 dark:ring-slate-700 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 transition-colors"
             />
-            {errors.limit && <p className="mt-1 text-xs text-red-600">{errors.limit.message}</p>}
+            {errors.limit && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.limit.message}</p>}
           </div>
           <button
             type="submit"
@@ -99,17 +99,17 @@ export function BudgetCard({ budget }: BudgetCardProps) {
           <button
             type="button"
             onClick={() => setIsEditing(false)}
-            className="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            className="inline-flex items-center rounded-md bg-white dark:bg-slate-800 px-2.5 py-1.5 text-sm font-semibold text-slate-900 dark:text-white shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
           >
             <X className="h-4 w-4" />
           </button>
         </form>
       ) : (
         <div className="mt-4">
-          <p className="text-2xl font-semibold tracking-tight text-gray-900">
+          <p className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-white transition-colors">
             {formatCurrency(budget.limit)}
           </p>
-          <p className="mt-1 text-sm text-gray-500">Monthly Limit</p>
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400 transition-colors">Monthly Limit</p>
         </div>
       )
       }

@@ -25,7 +25,7 @@ export function Footer() {
     };
 
     return (
-        <footer className="bg-white border-t border-slate-200" aria-labelledby="footer-heading">
+        <footer className="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 transition-colors duration-300" aria-labelledby="footer-heading">
             <h2 id="footer-heading" className="sr-only">
                 Footer
             </h2>
@@ -34,12 +34,12 @@ export function Footer() {
 
                     <div className="space-y-8 xl:col-span-1">
                         <Link href="/" className="flex items-center gap-2 group">
-                            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-600 shadow-sm shadow-indigo-200 group-hover:scale-105 transition-transform">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-600 shadow-sm shadow-indigo-200 dark:shadow-indigo-900/50 group-hover:scale-105 transition-transform">
                                 <Wallet className="h-4 w-4 text-white" />
                             </div>
-                            <span className="text-[17px] font-bold text-slate-900 tracking-tight">Capital</span>
+                            <span className="text-[17px] font-bold text-slate-900 dark:text-white tracking-tight">Capital</span>
                         </Link>
-                        <p className="text-sm leading-6 text-slate-500 max-w-xs">
+                        <p className="text-sm leading-6 text-slate-500 dark:text-slate-400 max-w-xs">
                             A modern personal finance tracker designed to help you understand and manage your money effectively.
                         </p>
                     </div>
@@ -47,7 +47,7 @@ export function Footer() {
                     <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
                         <div className="md:grid md:grid-cols-2 md:gap-8">
                             <div>
-                                <h3 className="text-sm font-semibold leading-6 text-slate-900">Product</h3>
+                                <h3 className="text-sm font-semibold leading-6 text-slate-900 dark:text-white">Product</h3>
                                 <ul role="list" className="mt-6 space-y-4">
                                     {navigation.product.map((item) => (
                                         <li key={item.name}>
@@ -62,7 +62,7 @@ export function Footer() {
                                                         }
                                                     }
                                                 }}
-                                                className="text-sm leading-6 text-slate-500 hover:text-indigo-600 transition-colors"
+                                                className="text-sm leading-6 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
                                             >
                                                 {item.name}
                                             </a>
@@ -71,11 +71,11 @@ export function Footer() {
                                 </ul>
                             </div>
                             <div className="mt-10 md:mt-0">
-                                <h3 className="text-sm font-semibold leading-6 text-slate-900">Legal</h3>
+                                <h3 className="text-sm font-semibold leading-6 text-slate-900 dark:text-white">Legal</h3>
                                 <ul role="list" className="mt-6 space-y-4">
                                     {navigation.legal.map((item) => (
                                         <li key={item.name}>
-                                            <a href={item.href} className="text-sm leading-6 text-slate-500 hover:text-indigo-600 transition-colors">
+                                            <a href={item.href} className="text-sm leading-6 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                                                 {item.name}
                                             </a>
                                         </li>
@@ -85,11 +85,11 @@ export function Footer() {
                         </div>
                         <div className="md:grid md:grid-cols-1 md:gap-8">
                             <div>
-                                <h3 className="text-sm font-semibold leading-6 text-slate-900">Account</h3>
+                                <h3 className="text-sm font-semibold leading-6 text-slate-900 dark:text-white">Account</h3>
                                 <ul role="list" className="mt-6 space-y-4">
                                     {navigation.account.map((item) => (
                                         <li key={item.name}>
-                                            <Link href={item.href} className="text-sm leading-6 text-slate-500 hover:text-indigo-600 transition-colors">
+                                            <Link href={item.href} className="text-sm leading-6 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                                                 {item.name}
                                             </Link>
                                         </li>
@@ -101,8 +101,8 @@ export function Footer() {
 
                 </div>
 
-                <div className="mt-16 border-t border-slate-900/10 pt-8 sm:mt-20 lg:mt-24 flex flex-col sm:flex-row items-center justify-between">
-                    <p className="text-xs leading-5 text-slate-500">
+                <div className="mt-16 border-t border-slate-900/10 dark:border-white/10 pt-8 sm:mt-20 lg:mt-24 flex flex-col sm:flex-row items-center justify-between">
+                    <p className="text-xs leading-5 text-slate-500 dark:text-slate-400">
                         &copy; {new Date().getFullYear()} Capital Finance. All rights reserved.
                     </p>
                 </div>

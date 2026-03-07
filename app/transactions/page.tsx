@@ -19,25 +19,25 @@ export default function TransactionsPage() {
     );
   }
 
-  const filteredTransactions = filterCategory === 'All' 
-    ? transactions 
+  const filteredTransactions = filterCategory === 'All'
+    ? transactions
     : transactions.filter(t => t.category === filterCategory);
 
   return (
     <div className="space-y-8">
       <div className="sm:flex sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+          <h1 className="text-2xl font-bold leading-7 text-slate-900 dark:text-white sm:truncate sm:text-3xl sm:tracking-tight transition-colors">
             Transactions
           </h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400 transition-colors">
             A list of all your income and expenses.
           </p>
         </div>
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
           <a
             href="/add-transaction"
-            className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Add Transaction
           </a>
@@ -45,14 +45,14 @@ export default function TransactionsPage() {
       </div>
 
       <div className="flex items-center space-x-4">
-        <label htmlFor="category-filter" className="text-sm font-medium text-gray-700">
+        <label htmlFor="category-filter" className="text-sm font-medium text-slate-700 dark:text-slate-300 transition-colors">
           Filter by Category:
         </label>
         <select
           id="category-filter"
           value={filterCategory}
           onChange={(e) => setFilterCategory(e.target.value)}
-          className="block w-48 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          className="block w-48 rounded-md border-0 py-1.5 text-slate-900 dark:text-white bg-white dark:bg-slate-800 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-700 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 transition-colors"
         >
           <option value="All">All Categories</option>
           {DEFAULT_CATEGORIES.map((cat) => (

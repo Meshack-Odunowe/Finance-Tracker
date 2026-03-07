@@ -6,10 +6,10 @@ export default function AddTransactionPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+        <h1 className="text-2xl font-bold leading-7 text-slate-900 dark:text-white sm:truncate sm:text-3xl sm:tracking-tight transition-colors">
           Add Transaction
         </h1>
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400 transition-colors">
           Record a new income or expense to track your finances.
         </p>
       </div>
