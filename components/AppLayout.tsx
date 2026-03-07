@@ -8,8 +8,9 @@ import { DashboardHeader } from '@/components/DashboardHeader';
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAuthPage = pathname.startsWith('/auth');
+  const isLandingPage = pathname === '/';
 
-  if (isAuthPage) {
+  if (isAuthPage || isLandingPage) {
     return (
       <div className="min-h-screen bg-[#fbfbfc]">
         <main className="flex-1">

@@ -13,7 +13,7 @@ import { toast } from 'sonner';
 const navItems = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Transactions', href: '/transactions', icon: ReceiptText },
-  { name: 'Add Transaction', href: '/add-transaction', icon: PlusCircle },
+  // { name: 'Add Transaction', href: '/add-transaction', icon: PlusCircle },
   { name: 'Budget', href: '/budget', icon: PieChart },
   { name: 'Security', href: '/auth/change-password', icon: Shield },
 ];
