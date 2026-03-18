@@ -119,18 +119,6 @@ export function Sidebar() {
       </nav>
 
       <div className="p-4 mt-auto border-t border-slate-200/50 dark:border-slate-800/50 space-y-4">
-        {!isSidebarCollapsed && (
-          <div className="rounded-xl bg-white dark:bg-slate-900 p-3 border border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-300">
-            <p className="text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Pro Plan</p>
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[13px] font-semibold text-slate-700 dark:text-slate-300">Usage Tracker</span>
-              <span className="text-[11px] text-indigo-600 dark:text-indigo-400 font-bold">85%</span>
-            </div>
-            <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-              <div className="h-full bg-indigo-500 rounded-full" style={{ width: '85%' }} />
-            </div>
-          </div>
-        )}
         <button
           onClick={handleLogout}
           className={twMerge(
