@@ -120,6 +120,23 @@ function LoginForm() {
                     </button>
                 </form>
 
+                <div className="mt-8 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-dashed border-slate-200 dark:border-slate-700">
+                    <div className="flex items-center gap-2 mb-2">
+                        <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Demo Account</span>
+                    </div>
+                    <div className="space-y-1">
+                        <div className="flex justify-between text-xs">
+                            <span className="text-slate-500 dark:text-slate-400">Email:</span>
+                            <span className="font-mono text-slate-700 dark:text-slate-200">meshackdevv@gmail.com</span>
+                        </div>
+                        <div className="flex justify-between text-xs">
+                            <span className="text-slate-500 dark:text-slate-400">Password:</span>
+                            <span className="font-mono text-slate-700 dark:text-slate-200">Password123!!</span>
+                        </div>
+                    </div>
+                </div>
+
                 <p className="text-center mt-6 text-sm text-slate-500 dark:text-slate-400">
                     Don&apos;t have an account?{" "}
                     <Link
