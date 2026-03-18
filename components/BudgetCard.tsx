@@ -6,9 +6,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Budget } from '@/types/finance';
 import { useFinanceStore } from '@/store/useFinanceStore';
-import { formatCurrency } from '@/utils/formatters';
 import { Edit2, Trash2, Check, X } from 'lucide-react';
 import { toast } from 'sonner';
+import { useCurrency } from '@/hooks/useCurrency';
 
 interface BudgetCardProps {
   budget: Budget;
@@ -23,6 +23,7 @@ type BudgetFormValues = z.infer<typeof budgetSchema>;
 export function BudgetCard({ budget }: BudgetCardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const { setBudget, deleteBudget } = useFinanceStore();
+  const { format, currency } = useCurrency();
 
   const {
     register,
@@ -80,7 +81,7 @@ export function BudgetCard({ budget }: BudgetCardProps) {
         <form onSubmit={handleSubmit(onSubmit)} className="mt-4 flex items-start space-x-2">
           <div className="relative flex-1">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <span className="text-slate-500 dark:text-slate-400 sm:text-sm transition-colors">₦</span>
+              <span className="text-slate-500 dark:text-slate-400 sm:text-sm transition-colors">{currency === 'NGN' ? '₦' : currency}</span>
             </div>
             <input
               type="number"
@@ -107,7 +108,7 @@ export function BudgetCard({ budget }: BudgetCardProps) {
       ) : (
         <div className="mt-4">
           <p className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-white transition-colors">
-            {formatCurrency(budget.limit)}
+            {format(budget.limit)}
           </p>
           <p className="mt-1 text-sm text-slate-500 dark:text-slate-400 transition-colors">Monthly Limit</p>
         </div>

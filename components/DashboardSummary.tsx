@@ -1,8 +1,8 @@
 'use client';
 
 import { ArrowDownRight, ArrowUpRight, Wallet, Activity } from 'lucide-react';
-import { formatCurrency } from '@/utils/formatters';
 import { twMerge } from 'tailwind-merge';
+import { useCurrency } from '@/hooks/useCurrency';
 
 interface DashboardSummaryProps {
   totalIncome: number;
@@ -17,10 +17,12 @@ export function DashboardSummary({
   remainingBalance,
   transactionCount,
 }: DashboardSummaryProps) {
+  const { format } = useCurrency();
+
   const cards = [
     {
       name: 'Total Balance',
-      value: formatCurrency(remainingBalance),
+      value: format(remainingBalance),
       icon: Wallet,
       color: remainingBalance >= 0 ? 'text-slate-900 dark:text-white' : 'text-red-600 dark:text-red-400',
       bgColor: 'bg-slate-50 dark:bg-slate-800/50',
@@ -28,7 +30,7 @@ export function DashboardSummary({
     },
     {
       name: 'Total Income',
-      value: formatCurrency(totalIncome),
+      value: format(totalIncome),
       icon: ArrowUpRight,
       color: 'text-emerald-600 dark:text-emerald-400',
       bgColor: 'bg-emerald-50/50 dark:bg-emerald-500/10',
@@ -36,7 +38,7 @@ export function DashboardSummary({
     },
     {
       name: 'Total Expenses',
-      value: formatCurrency(totalExpenses),
+      value: format(totalExpenses),
       icon: ArrowDownRight,
       color: 'text-rose-600 dark:text-rose-400',
       bgColor: 'bg-rose-50/50 dark:bg-rose-500/10',

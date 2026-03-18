@@ -3,6 +3,7 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { useTheme } from 'next-themes';
 import { useHydration } from '@/hooks/useHydration';
+import { useCurrency } from '@/hooks/useCurrency';
 
 interface CategoryBarChartProps {
   data: { name: string; value: number }[];
@@ -27,6 +28,8 @@ const DARK_COLORS = [
 export function CategoryBarChart({ data }: CategoryBarChartProps) {
   const { resolvedTheme } = useTheme();
   const isHydrated = useHydration();
+  const { format, currency } = useCurrency();
+  const symbol = currency === 'NGN' ? '₦' : currency;
 
   if (!isHydrated) return null;
 
@@ -60,11 +63,11 @@ export function CategoryBarChart({ data }: CategoryBarChartProps) {
             axisLine={false}
             tickLine={false}
             tick={{ fill: isDark ? '#94a3b8' : '#64748b', fontSize: 12 }}
-            tickFormatter={(value) => `₦${value}`}
+            tickFormatter={(value) => `${symbol}${value}`}
           />
           <Tooltip
             cursor={{ fill: isDark ? '#1e293b' : '#f8f9fb' }}
-            formatter={(value: any) => new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(Number(value))}
+            formatter={(value: any) => format(Number(value))}
             contentStyle={{
               borderRadius: '12px',
               border: isDark ? '1px solid #334155' : '1px solid #e2e8f0',

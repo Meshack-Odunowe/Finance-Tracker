@@ -44,6 +44,15 @@ export async function POST(request: Request) {
             },
         });
 
+        await prisma.activityLog.create({
+            data: {
+                userId: session.userId,
+                type: 'BUDGET_EXCEEDED', // Using this type or generic if needed, maybe I should add BUDGET_UPDATED to schema
+                description: `Set budget for ${category}: ₦${limit.toLocaleString()}`,
+                metadata: { budgetId: budget.id },
+            },
+        });
+
         return NextResponse.json(budget);
     } catch (error) {
         console.error('Failed to save budget:', error);

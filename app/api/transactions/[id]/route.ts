@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { Prisma } from '@prisma/client';
 import { getSession } from '@/lib/auth';
 
 export async function GET(
@@ -50,7 +51,7 @@ export async function PATCH(
         }
 
         const body = await request.json();
-        const { amount, type, category, description, date } = body;
+        const { amount, type, category, description, date, isRecurring, recurrenceType } = body;
 
         const transaction = await prisma.transaction.update({
             where: { id },
@@ -60,6 +61,17 @@ export async function PATCH(
                 category,
                 description,
                 date: date ? new Date(date) : undefined,
+                isRecurring,
+                recurrenceType,
+            },
+        });
+
+        await prisma.activityLog.create({
+            data: {
+                userId: session.userId,
+                type: 'TRANSACTION_UPDATED',
+                description: `Updated transaction: ${description || category}`,
+                metadata: { transactionId: id } as Prisma.InputJsonValue,
             },
         });
 
@@ -94,6 +106,16 @@ export async function DELETE(
         await prisma.transaction.delete({
             where: { id },
         });
+
+        await prisma.activityLog.create({
+            data: {
+                userId: session.userId,
+                type: 'TRANSACTION_DELETED',
+                description: `Deleted transaction: ${existing.description || existing.category}`,
+                metadata: { transactionId: id } as Prisma.InputJsonValue,
+            },
+        });
+
         return NextResponse.json({ success: true });
     } catch (error) {
         console.error('Failed to delete transaction:', error);

@@ -2,19 +2,21 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, ReceiptText, PlusCircle, PieChart, Wallet, ChevronLeft, ChevronRight, X, LogOut, Shield } from 'lucide-react';
+import { LayoutDashboard, ReceiptText, PieChart, Wallet, ChevronLeft, ChevronRight, X, LogOut, Shield, Target, Settings, Tag } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { useUIStore } from '@/store/useUIStore';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 const navItems = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Transactions', href: '/transactions', icon: ReceiptText },
-  // { name: 'Add Transaction', href: '/add-transaction', icon: PlusCircle },
+  { name: 'Categories', href: '/categories', icon: Tag },
   { name: 'Budget', href: '/budget', icon: PieChart },
+  { name: 'Savings Goals', href: '/savings-goals', icon: Target },
+  { name: 'Settings', href: '/settings', icon: Settings },
   { name: 'Security', href: '/auth/change-password', icon: Shield },
 ];
 

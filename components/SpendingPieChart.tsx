@@ -3,6 +3,7 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { useTheme } from 'next-themes';
 import { useHydration } from '@/hooks/useHydration';
+import { useCurrency } from '@/hooks/useCurrency';
 
 interface SpendingPieChartProps {
   data: { name: string; value: number }[];
@@ -37,6 +38,7 @@ const DARK_COLORS = [
 export function SpendingPieChart({ data }: SpendingPieChartProps) {
   const { resolvedTheme } = useTheme();
   const isHydrated = useHydration();
+  const { format } = useCurrency();
 
   if (!isHydrated) return null;
 
@@ -70,7 +72,7 @@ export function SpendingPieChart({ data }: SpendingPieChartProps) {
             ))}
           </Pie>
           <Tooltip
-            formatter={(value: any) => new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(Number(value))}
+            formatter={(value: any) => format(Number(value))}
             contentStyle={{
               borderRadius: '12px',
               border: isDark ? '1px solid #334155' : '1px solid #e2e8f0',

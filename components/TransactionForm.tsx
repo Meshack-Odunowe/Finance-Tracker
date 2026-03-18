@@ -15,6 +15,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import { Transaction } from '@/types/finance';
+import { useCurrency } from '@/hooks/useCurrency';
 
 const transactionSchema = z.object({
   amount: z.number().positive('Amount must be positive'),
@@ -23,6 +25,8 @@ const transactionSchema = z.object({
   customCategory: z.string().optional(),
   description: z.string().optional(),
   date: z.string().min(1, 'Date is required'),
+  isRecurring: z.boolean(),
+  recurrenceType: z.enum(['weekly', 'monthly', 'yearly']).nullable().optional(),
 }).refine((data) => {
   if (data.category === 'custom' && !data.customCategory) {
     return false;
@@ -35,9 +39,19 @@ const transactionSchema = z.object({
 
 type TransactionFormValues = z.infer<typeof transactionSchema>;
 
-export function TransactionForm() {
+interface TransactionFormProps {
+  initialData?: Transaction;
+  onComplete?: () => void;
+}
+
+export function TransactionForm({ initialData, onComplete }: TransactionFormProps) {
   const addTransaction = useFinanceStore((state) => state.addTransaction);
+  const updateTransaction = useFinanceStore((state) => state.updateTransaction);
+  const userCategories = useFinanceStore((state) => state.categories);
+  const { currency } = useCurrency();
   const router = useRouter();
+
+  const isEditing = !!initialData;
 
   const {
     register,
@@ -49,44 +63,69 @@ export function TransactionForm() {
   } = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
-      type: 'expense',
-      date: new Date().toISOString().split('T')[0],
-      description: '',
-      category: '',
+      type: initialData?.type || 'expense',
+      amount: initialData?.amount || 0,
+      date: initialData?.date ? new Date(initialData.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+      description: initialData?.description || '',
+      category: initialData?.category || '',
       customCategory: '',
+      isRecurring: initialData?.isRecurring || false,
+      recurrenceType: initialData?.recurrenceType || null,
     },
   });
 
   const type = useWatch({ control, name: 'type' });
   const categoryValue = useWatch({ control, name: 'category' });
-  const categories = type === 'expense' ? EXPENSE_CATEGORIES : INCOME_CATEGORIES;
+  const isRecurring = useWatch({ control, name: 'isRecurring' });
+
+  const defaultOptions = type === 'expense' ? EXPENSE_CATEGORIES : INCOME_CATEGORIES;
+  const customOptions = userCategories.filter(c => c.type === type).map(c => c.name);
+  const categories = Array.from(new Set([...defaultOptions, ...customOptions]));
 
   const onSubmit = async (data: TransactionFormValues) => {
     try {
       const finalCategory = data.category === 'custom' ? data.customCategory : data.category;
 
-      await addTransaction({
+      const payload = {
         ...data,
         category: finalCategory || '',
         description: data.description || '',
-      });
-      toast.success('Transaction added successfully!');
-      reset({
-        type: data.type,
-        date: new Date().toISOString().split('T')[0],
-        description: '',
-        amount: undefined,
-        category: '',
-        customCategory: '',
-      });
-      router.push('/transactions');
+        recurrenceType: data.isRecurring ? data.recurrenceType : null,
+      };
+
+      if (isEditing && initialData) {
+        await updateTransaction(initialData.id, payload);
+        toast.success('Transaction updated successfully!');
+      } else {
+        await addTransaction(payload);
+        toast.success('Transaction added successfully!');
+      }
+
+      if (onComplete) {
+        onComplete();
+      } else {
+        router.push('/transactions');
+      }
+
+      if (!isEditing) {
+        reset({
+          type: data.type,
+          date: new Date().toISOString().split('T')[0],
+          description: '',
+          amount: undefined,
+          category: '',
+          customCategory: '',
+          isRecurring: false,
+          recurrenceType: null,
+        });
+      }
     } catch (error) {
-      toast.error('Failed to add transaction. Please try again.');
+      toast.error(`Failed to ${isEditing ? 'update' : 'add'} transaction. Please try again.`);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-none animate-in fade-in slide-in-from-bottom-4 duration-500 transition-colors">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-none animate-in fade-in slide-in-from-bottom-4 duration-500 transition-colors">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-6">
         <div className="sm:col-span-3">
           <Label htmlFor="type" className="block text-[13px] font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
@@ -100,7 +139,6 @@ export function TransactionForm() {
                 onValueChange={(val) => {
                   if (val) {
                     field.onChange(val);
-                    // Reset category when type changes
                     setValue('category', '');
                     setValue('customCategory', '');
                   }
@@ -125,7 +163,7 @@ export function TransactionForm() {
           </Label>
           <div className="relative">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-              <span className="text-slate-400 dark:text-slate-500 text-sm transition-colors">₦</span>
+              <span className="text-slate-400 dark:text-slate-500 text-sm transition-colors">{currency === 'NGN' ? '₦' : currency}</span>
             </div>
             <input
               type="number"
@@ -182,9 +220,9 @@ export function TransactionForm() {
         )}
 
         <div className="sm:col-span-3">
-          <label htmlFor="date" className="block text-[13px] font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
+          <Label htmlFor="date" className="block text-[13px] font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
             Date
-          </label>
+          </Label>
           <input
             type="date"
             id="date"
@@ -195,9 +233,47 @@ export function TransactionForm() {
         </div>
 
         <div className="col-span-full">
-          <label htmlFor="description" className="block text-[13px] font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
+          <div className="flex items-center space-x-2 mb-4">
+            <input
+              type="checkbox"
+              id="isRecurring"
+              {...register('isRecurring')}
+              className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-600 dark:border-slate-700 dark:bg-slate-800"
+            />
+            <Label htmlFor="isRecurring" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+              This is a recurring transaction
+            </Label>
+          </div>
+
+          {isRecurring && (
+            <div className="col-span-full animate-in fade-in slide-in-from-top-2 duration-300 mb-4">
+              <Label htmlFor="recurrenceType" className="block text-[13px] font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
+                Recurrence Frequency
+              </Label>
+              <Controller
+                name="recurrenceType"
+                control={control}
+                render={({ field }) => (
+                  <Select onValueChange={(val) => val && field.onChange(val)} value={field.value || undefined}>
+                    <SelectTrigger id="recurrenceType" className="w-full h-11 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 text-[14px]">
+                      <SelectValue placeholder="Select frequency" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
+                      <SelectItem value="weekly">Weekly</SelectItem>
+                      <SelectItem value="monthly">Monthly</SelectItem>
+                      <SelectItem value="yearly">Yearly</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+            </div>
+          )}
+        </div>
+
+        <div className="col-span-full">
+          <Label htmlFor="description" className="block text-[13px] font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
             Description (Optional)
-          </label>
+          </Label>
           <input
             type="text"
             id="description"
@@ -209,19 +285,21 @@ export function TransactionForm() {
       </div>
 
       <div className="flex items-center justify-end gap-x-4 pt-4 border-t border-slate-100 dark:border-slate-800 transition-colors">
-        <button
-          type="button"
-          onClick={() => reset()}
-          className="px-4 py-2 text-[13px] font-bold text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
-        >
-          Reset
-        </button>
+        {!isEditing && (
+          <button
+            type="button"
+            onClick={() => reset()}
+            className="px-4 py-2 text-[13px] font-bold text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
+          >
+            Reset
+          </button>
+        )}
         <button
           type="submit"
           disabled={isSubmitting}
           className="rounded-lg bg-indigo-600 px-6 py-2 text-[13px] font-bold text-white shadow-sm shadow-indigo-200 dark:shadow-indigo-900/50 hover:bg-indigo-500 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
         >
-          {isSubmitting ? 'Adding...' : 'Add Transaction'}
+          {isSubmitting ? (isEditing ? 'Updating...' : 'Adding...') : (isEditing ? 'Update Transaction' : 'Add Transaction')}
         </button>
       </div>
     </form>

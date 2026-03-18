@@ -1,6 +1,6 @@
 'use client';
 
-import { formatCurrency } from '@/utils/formatters';
+import { useCurrency } from '@/hooks/useCurrency';
 import { motion } from 'motion/react';
 
 interface BudgetProgressProps {
@@ -10,6 +10,7 @@ interface BudgetProgressProps {
 }
 
 export function BudgetProgress({ category, spent, limit }: BudgetProgressProps) {
+  const { format } = useCurrency();
   const percentage = limit > 0 ? Math.min((spent / limit) * 100, 100) : 0;
 
   let colorClass = 'bg-emerald-500';
@@ -25,10 +26,10 @@ export function BudgetProgress({ category, spent, limit }: BudgetProgressProps) 
         <span className="text-sm font-medium text-slate-700 dark:text-slate-300 transition-colors">{category}</span>
         <div className="text-sm text-slate-500 dark:text-slate-400 transition-colors">
           <span className={percentage >= 100 ? 'text-red-500 dark:text-red-400 font-medium' : ''}>
-            {formatCurrency(spent)}
+            {format(spent)}
           </span>
           {' / '}
-          {formatCurrency(limit)}
+          {format(limit)}
         </div>
       </div>
       <div className="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2.5 overflow-hidden transition-colors duration-300">

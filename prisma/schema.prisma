@@ -11,32 +11,40 @@ datasource db {
 
 
 model User {
-  id               String        @id @default(uuid())
-  name             String
-  email            String        @unique
-  password         String
-  isVerified       Boolean       @default(false)
-  otp              String?
-  otpExpiry        DateTime?
-  resetToken       String?
-  resetTokenExpiry DateTime?
-  transactions     Transaction[]
-  budgets          Budget[]
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
+  id                String            @id @default(uuid())
+  name              String
+  email             String            @unique
+  password          String
+  isVerified        Boolean           @default(false)
+  otp               String?
+  otpExpiry         DateTime?
+  resetToken        String?
+  resetTokenExpiry  DateTime?
+  transactions      Transaction[]
+  budgets           Budget[]
+  savingsGoals      SavingsGoal[]
+  categories        Category[]
+  widgetPrefs       DashboardWidget[]
+  activityLogs      ActivityLog[]
+  preferredCurrency String            @default("USD")
+  themePreference   String            @default("light")
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
 }
 
 model Transaction {
-  id          String   @id @default(uuid())
-  userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  amount      Float
-  type        String
-  category    String
-  description String
-  date        DateTime
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount         Float
+  type           String
+  category       String
+  description    String
+  date           DateTime
+  isRecurring    Boolean  @default(false)
+  recurrenceType String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model Budget {
@@ -49,5 +57,52 @@ model Budget {
   updatedAt DateTime @updatedAt
 
   @@unique([userId, category])
+}
+
+model SavingsGoal {
+  id            String    @id @default(uuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name          String
+  targetAmount  Float
+  currentAmount Float     @default(0)
+  deadline      DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  type      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, name])
+}
+
+model DashboardWidget {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  isVisible Boolean  @default(true)
+  order     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, name])
+}
+
+model ActivityLog {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        String
+  description String
+  metadata    Json?
+  createdAt   DateTime @default(now())
 }
 

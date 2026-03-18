@@ -57,6 +57,15 @@ export async function PATCH(
             data: { limit },
         });
 
+        await prisma.activityLog.create({
+            data: {
+                userId: session.userId,
+                type: 'BUDGET_EXCEEDED',
+                description: `Updated ${category} budget limit to ₦${limit.toLocaleString()}`,
+                metadata: { budgetId: budget.id },
+            },
+        });
+
         return NextResponse.json(budget);
     } catch (error) {
         console.error('Failed to update budget:', error);
@@ -83,6 +92,15 @@ export async function DELETE(
                 }
             },
         });
+
+        await prisma.activityLog.create({
+            data: {
+                userId: session.userId,
+                type: 'BUDGET_EXCEEDED',
+                description: `Deleted budget for ${category}`,
+            },
+        });
+
         return NextResponse.json({ success: true });
     } catch (error) {
         console.error('Failed to delete budget:', error);

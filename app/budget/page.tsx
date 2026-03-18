@@ -7,6 +7,7 @@ import { BudgetCard } from '@/components/BudgetCard';
 import { EXPENSE_CATEGORIES } from '@/utils/categoryHelpers';
 import { PlusCircle } from 'lucide-react';
 import { toast } from 'sonner';
+import { useCurrency } from '@/hooks/useCurrency';
 
 import {
   Select,
@@ -20,7 +21,9 @@ import { Label } from "@/components/ui/label";
 export default function BudgetPage() {
   const isHydrated = useHydration();
   const budgets = useFinanceStore((state) => state.budgets);
+  const userCategories = useFinanceStore((state) => state.categories);
   const setBudget = useFinanceStore((state) => state.setBudget);
+  const { currency } = useCurrency();
   const [isAdding, setIsAdding] = useState(false);
   const [newCategory, setNewCategory] = useState('');
   const [newLimit, setNewLimit] = useState('');
@@ -59,7 +62,12 @@ export default function BudgetPage() {
     }
   };
 
-  const availableCategories = EXPENSE_CATEGORIES.filter(
+  const allExpenseCategories = Array.from(new Set([
+    ...EXPENSE_CATEGORIES,
+    ...userCategories.filter(c => c.type === 'expense').map(c => c.name)
+  ]));
+
+  const availableCategories = allExpenseCategories.filter(
     cat => !budgets.some(b => b.category === cat)
   );
 
@@ -113,7 +121,7 @@ export default function BudgetPage() {
               </label>
               <div className="mt-2 relative rounded-md shadow-sm">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <span className="text-slate-400 dark:text-slate-500 sm:text-sm transition-colors">₦</span>
+                  <span className="text-slate-400 dark:text-slate-500 sm:text-sm transition-colors">{currency === 'NGN' ? '₦' : currency}</span>
                 </div>
                 <input
                   type="number"
