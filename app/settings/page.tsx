@@ -105,10 +105,10 @@ export default function SettingsPage() {
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
+                                    <SelectItem value="NGN">NGN (₦)</SelectItem>
                                     <SelectItem value="USD">USD ($)</SelectItem>
                                     <SelectItem value="EUR">EUR (€)</SelectItem>
                                     <SelectItem value="GBP">GBP (£)</SelectItem>
-                                    <SelectItem value="NGN">NGN (₦)</SelectItem>
                                     <SelectItem value="CAD">CAD ($)</SelectItem>
                                 </SelectContent>
                             </Select>

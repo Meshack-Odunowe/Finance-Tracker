@@ -55,7 +55,7 @@ export const useFinanceStore = create<FinanceState>((set) => ({
       const savingsGoals = goalsRes.ok ? await goalsRes.json() : [];
       const activityLogs = logsRes.ok ? await logsRes.json() : [];
       const categories = categoriesRes.ok ? await categoriesRes.json() : [];
-      const userPreferences = prefsRes.ok ? await prefsRes.json() : { preferredCurrency: 'USD', themePreference: 'light' };
+      const userPreferences = prefsRes.ok ? await prefsRes.json() : { preferredCurrency: 'NGN', themePreference: 'light' };
       const widgets = widgetsRes.ok ? await widgetsRes.json() : [];
 
       set({ transactions, budgets, savingsGoals, activityLogs, categories, userPreferences, widgets, isLoading: false });
